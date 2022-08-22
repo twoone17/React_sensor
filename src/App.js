@@ -5,12 +5,12 @@ import {
 } from "react-router-dom"
 import Home from "./routes/Home"
 import Analysis from "./routes/Analysis"
-import Nav from "./component/Nav"
+import Navs from "./component/Navs"
 
 
 function App() {
   return <Router>
-    <Nav />
+    <Navs />
     <Routes>
       <Route path="/analysis" element={ <Analysis /> } />
       <Route path="/" element={ <Home /> } />
