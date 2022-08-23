@@ -6,6 +6,7 @@ import Navs from "./component/Navs";
 function App() {
   //
   return (
+    //
     <Router>
       <Navs />
       <Routes>
