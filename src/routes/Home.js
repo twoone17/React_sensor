@@ -7,7 +7,7 @@ function Home() {
    
     return (
         <div>
-            <Header style={{flex:2}} />
+            <Header style={{flex:2, backgroundColor: 'red',}} />
             <Footer style={{flex:1}} />
         </div>    
     
