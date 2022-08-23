@@ -5,6 +5,7 @@ function Header() {
   const [connect, setConnect] = useState(true);
   const [device, setDevice] = useState("");
 
+
   const onClickBluetooth = () => {
     navigator.bluetooth
       .requestDevice({
