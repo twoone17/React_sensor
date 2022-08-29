@@ -1,5 +1,6 @@
 import { useSearchParams } from "react-router-dom";
 import { useState, useEffect } from "react";
+import styles from "./Header.module.css";
 
 function Header() {
   const [connect, setConnect] = useState(true);
@@ -27,7 +28,7 @@ function Header() {
   console.log(device);
 
   return (
-    <div>
+    <div className={`${styles.row} ${styles.back}`}>
       <button onClick={onClickBluetooth}>Click to connect bluetooth</button>
       {connect ? (
         <h1>Device Loading...</h1>
