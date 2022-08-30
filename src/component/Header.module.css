@@ -1,12 +1,14 @@
 .row {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     text-align: center;
+    height: 500px;
 }
 
 .back {
-    background-image: url(img/backg.jpg);
+    background-image: url(../img/backg.jpg);
     background-repeat: no-repeat;
     background-position: top center;
     background-size: cover;
