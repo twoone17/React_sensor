@@ -1,6 +1,7 @@
 import { useSearchParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import styles from "./Header.module.css";
+
 function Header() {
   const [connect, setConnect] = useState(true);
   const [device, setDevice] = useState("");
@@ -84,16 +85,22 @@ function Header() {
   }
 
   return (
-    <div className={`${styles.row} ${styles.back}`}>
-      <button onClick={onClickBluetooth}>Click to connect bluetooth</button>
-      {connect ? (
-        <h1>Device Loading...</h1>
-      ) : (
-        <h1>Device name : {device.name}</h1>
-      )}
-      <h2>XAngle : {Xangle} </h2>
-      <h2>YAngle : {Yangle} </h2>
+    <div>
+      <div className={styles.row}>
+        <button onClick={onClickBluetooth}>Click to connect bluetooth</button>
+        {connect ? (
+          <h1>Device Loading...</h1>
+        ) : (
+          <h1>Device name : {device.name}</h1>
+        )}
+        <h2>XAngle : {Xangle} </h2>
+        <h2>YAngle : {Yangle} </h2>
+      </div>
+      <div>
+        
+      </div>
     </div>
   );
 }
 export default Header;
+

@@ -3,11 +3,10 @@ import styles from "./Footer.module.css"
 function Footer() {
     const AppName = "SensorApp"
    
-    return (
-        
+    return (        
         <div className={styles.footer} style={{display: 'flex'}}>
             <img src="img/logo.png"></img>
-            <h1>{AppName}</h1>
+            <h1 className={styles.a}>{AppName}</h1>
 
         </div>
     )

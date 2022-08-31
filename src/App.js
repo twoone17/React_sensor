@@ -1,8 +1,13 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./routes/Home";
-import Analysis from "./routes/Analysis";
-import Navs from "./component/Navs";
-import Footer from "./component/Footer";
+
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+} from "react-router-dom"
+import Home from "./routes/Home"
+import Analysis from "./routes/Analysis"
+import Navs from "./component/Navs"
+
 
 function App() {
   let data = [
@@ -26,16 +31,15 @@ function App() {
     },
   ];
 
-  return (
-    <Router>
-      <Navs />
-      <Routes>
-        {/* <Route path="/analysis" element={ <Analysis data={data}/> } /> */}
-        <Route path="/" element={<Home />} />
-      </Routes>
-      <Footer />
-    </Router>
-  );
+
+  return <Router>
+    <Navs />
+    <Routes>
+      <Route path="/analysis" element={ <Analysis data={data}/> } />
+      <Route path="/" element={ <Home /> } />
+    </Routes>
+  </Router>
+
 }
 
 export default App;
