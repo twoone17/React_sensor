@@ -4,6 +4,8 @@ import styles from "./Header.module.css";
 function Header() {
   const [connect, setConnect] = useState(true);
   const [device, setDevice] = useState("");
+  const [Xangle, setXangle] = useState("");
+  const [Yangle, setYangle] = useState("");
   const buffer = [];
   const onClickBluetooth = () => {
     navigator.bluetooth
@@ -13,6 +15,8 @@ function Header() {
       })
       .then((device) => {
         console.log("Connecting to GATT Server...");
+        setConnect(false);
+        setDevice(device);
         return device.gatt.connect();
       })
       .then((server) => {
@@ -48,8 +52,9 @@ function Header() {
         }
         // buffer.toString();
         const bufferMerge = buffer.join("");
-        console.log(bufferMerge);
-        console.log(hex2a(bufferMerge));
+        const Xanglevalue = hex2a(bufferMerge);
+        setXangle(Xanglevalue);
+        console.log(Xanglevalue);
       })
       .catch((error) => {
         console.log("Argh! " + error);
@@ -78,8 +83,8 @@ function Header() {
       ) : (
         <h1>Device name : {device.name}</h1>
       )}
-      <p></p>
-      <h1>hu</h1>
+      <h2>XAngle : {Xangle} </h2>
+      <h2>YAngle : {Yangle} </h2>
     </div>
   );
 }
