@@ -2,7 +2,7 @@ import { useSearchParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import styles from "./Header.module.css";
 function Header() {
-  const [connect, setConnect] = useState("0");
+  const [connect, setConnect] = useState(true);
   const [device, setDevice] = useState("");
   const [Xangle, setXangle] = useState("");
   const [Yangle, setYangle] = useState("");
@@ -14,7 +14,8 @@ function Header() {
         acceptAllDevices: true,
         optionalServices: ["66df5109-edde-4f8a-a5e1-02e02a69cbd5"],
       });
-
+      setConnect(false);
+      setDevice(deviceActivate);
       console.log("Connecting to GATT Server...");
       const server = await deviceActivate.gatt.connect();
       //Service
@@ -33,12 +34,12 @@ function Header() {
 
       characteristic.addEventListener(
         "characteristicvaluechanged",
-        handleBatteryLevelChanged
+        handleXangleChanged
       );
 
       characteristic2.addEventListener(
         "characteristicvaluechanged",
-        handleBatteryLevelChanged2
+        handleYangleChanged
       );
 
       setInterval(() => {
@@ -58,10 +59,8 @@ function Header() {
     return str;
   }
 
-  function handleBatteryLevelChanged(event) {
-    const gyroX = event.target.value.getUint8(0);
+  function handleXangleChanged(event) {
     const length = event.target.value.byteLength;
-    console.log("changed value: " + gyroX);
     for (let i = 0; i < length; i++) {
       buffer[i] = event.target.value.getUint8(i).toString(16);
     }
@@ -69,13 +68,11 @@ function Header() {
     const bufferMerge = buffer.join("");
     const Xanglevalue = hex2a(bufferMerge);
     setXangle(Xanglevalue);
-    console.log(Xanglevalue);
+    console.log("Xangle" + Xanglevalue);
   }
 
-  function handleBatteryLevelChanged2(event) {
-    const gyroY = event.target.value.getUint8(0);
+  function handleYangleChanged(event) {
     const length = event.target.value.byteLength;
-    console.log("changed value: " + gyroY);
     for (let i = 0; i < length; i++) {
       buffer[i] = event.target.value.getUint8(i).toString(16);
     }
@@ -83,9 +80,8 @@ function Header() {
     const bufferMerge = buffer.join("");
     const Yanglevalue = hex2a(bufferMerge);
     setYangle(Yanglevalue);
-    console.log(Yanglevalue);
+    console.log("Yangle" + Yanglevalue);
   }
-  console.log(device);
 
   return (
     <div className={`${styles.row} ${styles.back}`}>
