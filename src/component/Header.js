@@ -4,6 +4,7 @@ import styles from "./Header.module.css";
 function Header() {
   const [connect, setConnect] = useState(true);
   const [device, setDevice] = useState("");
+  const buffer = [];
   const onClickBluetooth = () => {
     navigator.bluetooth
       .requestDevice({
@@ -42,14 +43,30 @@ function Header() {
       .then((value) => {
         console.log(value);
         console.log(value.getUint8(0));
+        for (let i = 0; i < 7; i++) {
+          buffer[i] = value.getUint8(i).toString(16);
+        }
+        // buffer.toString();
+        const bufferMerge = buffer.join("");
+        console.log(bufferMerge);
+        console.log(hex2a(bufferMerge));
       })
       .catch((error) => {
         console.log("Argh! " + error);
       });
   };
 
+  function hex2a(hexx) {
+    let hex = hexx.toString(); //force conversion
+    let str = "";
+    for (let i = 0; i < hex.length; i += 2)
+      str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
+    return str;
+  }
+
   function handleBatteryLevelChanged(event) {
-    console.log("changed!");
+    const gyroX = event.target.value.getUint8(0);
+    console.log("changed value: " + gyroX);
   }
   console.log(device);
 
