@@ -6,7 +6,6 @@ import {
 import Home from "./routes/Home"
 import Analysis from "./routes/Analysis"
 import Navs from "./component/Navs"
-import Footer from "./component/Footer"
 
 function App() {
   let data = [
@@ -38,7 +37,6 @@ function App() {
       <Route path="/analysis" element={ <Analysis data={data}/> } />
       <Route path="/" element={ <Home /> } />
     </Routes>
-    <Footer />
   </Router>
 }
 
