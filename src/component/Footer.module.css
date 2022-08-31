@@ -1,11 +1,16 @@
+@import url('https://fonts.googleapis.com/css2?family=Ubuntu&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
+
 .footer {
     position:absolute;
     bottom:0;
     width:100%;
-    height:100px;   
+    height:50px;   
     
 }
 
 .a {
-    font-family: fantasy;
+    margin-top: 25px;
+    margin-left: 20px;
+    font-family: 'Lobster', cursive;
 }

@@ -7,6 +7,9 @@ function Header() {
   const [device, setDevice] = useState("");
   const [Xangle, setXangle] = useState("");
   const [Yangle, setYangle] = useState("");
+  const [state1, setState1] = useState("허리가 평균보다 8도 굽어있어요"); //상태
+  const [state2, setState2] = useState("허리를 피고 앉아봐요!"); //조언
+
   const buffer = [];
   const [startButton, setStartButton] = useState(false);
   async function onClickBluetooth() {
@@ -65,7 +68,6 @@ function Header() {
     for (let i = 0; i < length; i++) {
       buffer[i] = event.target.value.getUint8(i).toString(16);
     }
-    // buffer.toString();
     const bufferMerge = buffer.join("");
     const Xanglevalue = hex2a(bufferMerge);
     setXangle(Xanglevalue);
@@ -77,7 +79,6 @@ function Header() {
     for (let i = 0; i < length; i++) {
       buffer[i] = event.target.value.getUint8(i).toString(16);
     }
-    // buffer.toString();
     const bufferMerge = buffer.join("");
     const Yanglevalue = hex2a(bufferMerge);
     setYangle(Yanglevalue);
@@ -89,15 +90,20 @@ function Header() {
       <div className={styles.row}>
         <button onClick={onClickBluetooth}>Click to connect bluetooth</button>
         {connect ? (
-          <h1>Device Loading...</h1>
+          <h4>Device Loading...</h4>
         ) : (
-          <h1>Device name : {device.name}</h1>
+          <h4>Device name : {device.name}</h4>
         )}
-        <h2>XAngle : {Xangle} </h2>
-        <h2>YAngle : {Yangle} </h2>
-      </div>
-      <div>
-        
+        <br></br>
+        <div className={styles.container}>
+          <h2 className={styles.xy}>XAngle : {Xangle} </h2>
+          <br></br>
+          <h2 className={styles.xy}>YAngle : {Yangle} </h2>
+        </div>
+        <div>
+          <h3 className={styles.s1}>{state1}</h3>
+          <p className={styles.s2}>{state2}</p>
+        </div>
       </div>
     </div>
   );
