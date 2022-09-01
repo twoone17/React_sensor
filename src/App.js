@@ -1,14 +1,8 @@
-
-import {
-  BrowserRouter as Router,
-  Routes,
-  Route,
-} from "react-router-dom"
-import Home from "./routes/Home"
-import Analysis from "./routes/Analysis"
-import Navs from "./component/Navs"
-import Footer from "./component/Footer"
-
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./routes/Home";
+import Analysis from "./routes/Analysis";
+import Navs from "./component/Navs";
+import Footer from "./component/Footer";
 
 function App() {
   let data = [
@@ -32,16 +26,16 @@ function App() {
     },
   ];
 
-
-  return <Router>
-    <Navs />
-    <Routes>
-      {/* <Route path="/analysis" element={ <Analysis /> } /> */}
-      <Route path="/" element={ <Home /> } />
-    </Routes>
-    <Footer />
-  </Router>
-
+  return (
+    <Router>
+      <Navs />
+      <Routes>
+        {/* <Route path="/analysis" element={ <Analysis /> } /> */}
+        <Route path={`${process.env.PUBLIC_URL}/`} element={<Home />} />
+      </Routes>
+      <Footer />
+    </Router>
+  );
 }
 
 export default App;

@@ -21,11 +21,14 @@ function Header() {
       setConnect(false);
       setDevice(deviceActivate);
       console.log("Connecting to GATT Server...");
+      deviceActivate.addEventListener("gattserverdisconnected", onDisconnected);
       const server = await deviceActivate.gatt.connect();
+
       //Service
       const service = await server.getPrimaryService(
         "66df5109-edde-4f8a-a5e1-02e02a69cbd5"
       );
+
       //X sensor characteristic
       const characteristic = await service.getCharacteristic(
         "741c12b9-e13c-4992-8a5e-fce46dec0bff"
@@ -71,18 +74,26 @@ function Header() {
     const bufferMerge = buffer.join("");
     const Xanglevalue = hex2a(bufferMerge);
     setXangle(Xanglevalue);
+    if (Xanglevalue > -60 && Xanglevalue < 60) setState1(1);
     console.log("Xangle" + Xanglevalue);
   }
 
   function handleYangleChanged(event) {
     const length = event.target.value.byteLength;
     for (let i = 0; i < length; i++) {
-      buffer[i] = event.target.value.getUint8(i).toString(16);
+      buffer[i] = event.targgiet.value.getUint8(i).toString(16);
     }
     const bufferMerge = buffer.join("");
     const Yanglevalue = hex2a(bufferMerge);
+
     setYangle(Yanglevalue);
     console.log("Yangle" + Yanglevalue);
+  }
+
+  //device 연결 해제 여부 확인
+  function onDisconnected(event) {
+    const device = event.target;
+    console.log(`Device ${device.name} is disconnected.`);
   }
 
   return (
@@ -109,4 +120,3 @@ function Header() {
   );
 }
 export default Header;
-
