@@ -74,7 +74,6 @@ function Header() {
     const bufferMerge = buffer.join("");
     const Xanglevalue = hex2a(bufferMerge);
     setXangle(Xanglevalue);
-    if (Xanglevalue > -60 && Xanglevalue < 60) setState1(1);
     console.log("Xangle" + Xanglevalue);
   }
 
