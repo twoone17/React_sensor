@@ -80,7 +80,7 @@ function Header() {
   function handleYangleChanged(event) {
     const length = event.target.value.byteLength;
     for (let i = 0; i < length; i++) {
-      buffer[i] = event.targgiet.value.getUint8(i).toString(16);
+      buffer[i] = event.target.value.getUint8(i).toString(16);
     }
     const bufferMerge = buffer.join("");
     const Yanglevalue = hex2a(bufferMerge);
