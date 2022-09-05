@@ -9,9 +9,9 @@ function Navs() {
     return (
       <Navbar className={styles.sticky} bg="dark" variant="dark">
         <Container>
-          <Navbar.Brand href="/">SensorApp</Navbar.Brand>
+          <Navbar.Brand href={`${process.env.PUBLIC_URL}/`}>SensorApp</Navbar.Brand>
           <Nav className="me-auto">
-            <Nav.Link href="/">Home</Nav.Link>
+            <Nav.Link href={`${process.env.PUBLIC_URL}/`}>Home</Nav.Link>
             <Nav.Link href="/analysis">Analysis</Nav.Link>  
             <Nav.Link href="/analysis">Setting</Nav.Link>          
           </Nav>
