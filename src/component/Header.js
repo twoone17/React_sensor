@@ -9,7 +9,8 @@ function Header() {
   const [Yangle, setYangle] = useState("");
   const [state1, setState1] = useState("허리가 평균보다 8도 굽어있어요"); //상태
   const [state2, setState2] = useState("허리를 피고 앉아봐요!"); //조언
-
+  const [count, setCount] = useState(0);
+  let CCount = 0;
   const buffer = [];
   const [startButton, setStartButton] = useState(false);
   async function onClickBluetooth() {
@@ -20,6 +21,7 @@ function Header() {
       });
       setConnect(false);
       setDevice(deviceActivate);
+      setCount((count) => count + 1);
       console.log("Connecting to GATT Server...");
       deviceActivate.addEventListener("gattserverdisconnected", onDisconnected);
       const server = await deviceActivate.gatt.connect();
@@ -38,6 +40,8 @@ function Header() {
       const characteristic2 = await service.getCharacteristic(
         "baad41b2-f12e-4322-9ba6-22cd9ce09832"
       );
+      console.log("count" + count);
+      setCount((count) => count + 1);
 
       characteristic.addEventListener(
         "characteristicvaluechanged",
@@ -48,11 +52,12 @@ function Header() {
         "characteristicvaluechanged",
         handleYangleChanged
       );
-
       setInterval(() => {
+        CCount++;
         const Xvalue = characteristic.readValue();
         const Yvalue = characteristic2.readValue();
-      }, 500);
+        console.log("this is interval" + CCount);
+      }, 1000);
     } catch (error) {
       console.log("Argh! " + error);
     }
@@ -74,6 +79,9 @@ function Header() {
     const bufferMerge = buffer.join("");
     const Xanglevalue = hex2a(bufferMerge);
     setXangle(Xanglevalue);
+    if (CCount % 10) {
+      localStorage.setItem(CCount, Xanglevalue);
+    }
     console.log("Xangle" + Xanglevalue);
   }
 
@@ -85,7 +93,9 @@ function Header() {
     const bufferMerge = buffer.join("");
     const Yanglevalue = hex2a(bufferMerge);
 
+    setCount(count + 1);
     setYangle(Yanglevalue);
+    localStorage.setItem(CCount, Yanglevalue);
     console.log("Yangle" + Yanglevalue);
   }
 
