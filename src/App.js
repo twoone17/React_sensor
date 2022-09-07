@@ -30,7 +30,7 @@ function App() {
     <Router>
       <Navs />
       <Routes>
-        {/* <Route path="/analysis" element={ <Analysis /> } /> */}
+        <Route path="/analysis" element={ <Analysis /> } />
         <Route path={`${process.env.PUBLIC_URL}/`} element={<Home />} />
       </Routes>
       <Footer />
