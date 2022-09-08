@@ -12,5 +12,5 @@
 //     animate
 //   />
 // );
-
+//
 // export default Analysis;
