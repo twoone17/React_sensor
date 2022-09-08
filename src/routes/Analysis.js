@@ -1,5 +1,5 @@
-// import React from "react";
-// import { PieChart } from 'react-minimal-pie-chart';
+import React from "react";
+import { PieChart } from 'react-minimal-pie-chart';
 
 function Analysis({ data }) {
   return (
