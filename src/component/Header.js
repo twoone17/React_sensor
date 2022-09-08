@@ -12,6 +12,8 @@ function Header() {
   const [count, setCount] = useState(0);
   let CCount = 0;
   const buffer = [];
+  let startTime = 0;
+  let endTime = 0;
   const [startButton, setStartButton] = useState(false);
   async function onClickBluetooth() {
     try {
@@ -19,6 +21,7 @@ function Header() {
         acceptAllDevices: true,
         optionalServices: ["66df5109-edde-4f8a-a5e1-02e02a69cbd5"],
       });
+      startTime = Date.now();
       setConnect(false);
       setDevice(deviceActivate);
       setCount((count) => count + 1);
@@ -103,6 +106,9 @@ function Header() {
   function onDisconnected(event) {
     const device = event.target;
     console.log(`Device ${device.name} is disconnected.`);
+    endTime = Date.now();
+    const TotalTime = endTime - startTime;
+    console.log(TotalTime);
   }
 
   return (
