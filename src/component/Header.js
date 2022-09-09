@@ -4,12 +4,16 @@ import styles from "./Header.module.css";
 
 function Header() {
   const [connected, setConnect] = useState(true);
+  const [Disconnected, setDisConnect] = useState(true);
   const [device, setDevice] = useState("");
   const [Xangle, setXangle] = useState("");
   const [Yangle, setYangle] = useState("");
   const [state1, setState1] = useState("허리가 평균보다 8도 굽어있어요"); //상태
   const [state2, setState2] = useState("허리를 피고 앉아봐요!"); //조언
   const [StartTimeState, setStartTimeState] = useState(""); //시간
+  const [EndTimeState, setEndTimeState] = useState(""); //시간
+  const [TotalTimeState, setTotalTimeState] = useState("");
+
   let disConnection = false;
   let ConvertedTotalTime = 0;
   let CCount = 0;
@@ -150,11 +154,14 @@ function Header() {
   async function onDisconnected() {
     console.log(ConvertedStartTime);
     disConnection = true;
+    setDisConnect(false);
     EndTime = Date.now();
     let EndDate = new Date(EndTime);
     EndTimeByGetTime = EndDate.getTime();
     ConvertedEndTime = timeConvert(EndTime);
     TotalTime = (EndTimeByGetTime - StartTimeByGetTime) / 1000;
+    setEndTimeState(ConvertedEndTime);
+    setTotalTimeState(TotalTime);
     await device.gatt.disconnect();
   }
 
@@ -225,10 +232,12 @@ function Header() {
           <h3 className={styles.s1}>{state1}</h3>
           <p className={styles.s2}>{state2}</p>
           {connected ? (
-            <a>기기를 연결해서 측정을 시작해보세요 ! </a>
+            <p>기기를 연결해서 측정을 시작해보세요 ! </p>
           ) : (
-            <a>시작시간 : {StartTimeState}</a>
+            <p>시작시간 : {StartTimeState}</p>
           )}
+          {Disconnected ? "" : <p>종료시간 : {EndTimeState}</p>}
+          {Disconnected ? "" : <p>총 경과 시간 : {TotalTimeState}</p>}
         </div>
       </div>
     </div>
