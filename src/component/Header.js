@@ -13,7 +13,26 @@ function Header() {
   const [StartTimeState, setStartTimeState] = useState(""); //bluetooth 연결한 시작 시간
   const [EndTimeState, setEndTimeState] = useState(""); //bluetooth 연결해제된 종료 시간
   const [TotalTimeState, setTotalTimeState] = useState(""); //총 경과시간
-
+  const [StorageData, setStorageData] = useState([
+    {
+      XTimeStorage: 0,
+      YTimeStorage: 0,
+      XVibrateStorage: 0,
+      YVibrateStorage: 0,
+      Duplicated: 0,
+    },
+  ]);
+  let Xanglevalue = 0;
+  let Yanglevalue = 0;
+  const Storage = {
+    XTimeStorage: 0,
+    YTimeStorage: 0,
+    XVibrateStorage: 0,
+    YVibrateStorage: 0,
+    Duplicated: 0,
+  };
+  let Xboolean = false;
+  let Yboolean = false;
   let XCount = 0;
   let YCount = 0;
   let disConnection = false;
@@ -23,7 +42,7 @@ function Header() {
   let StartTime = 0;
   let EndTime = 0;
   let TotalTime = 0;
-
+  let ParsedStorage;
   let ConvertedStartTime = 0;
   let ConvertedEndTime = 0;
   let bluetoothDevice;
@@ -47,6 +66,12 @@ function Header() {
       setConnect(false);
       setDevice(deviceActivate);
       setStartTimeState(ConvertedStartTime);
+      const savedTime = localStorage.getItem(ConvertedStartTime);
+
+      if (savedTime != null) {
+        savedTime.forEach((item) => console.log(item));
+      }
+
       console.log("Connecting to GATT Server...");
       bluetoothDevice.addEventListener(
         //초반 연결 해제 감지
@@ -101,6 +126,7 @@ function Header() {
         const Xvalue = characteristic.readValue(); //Xsensor 값 읽기 (이걸 포함해야 characteristicvaluechanged 의 EventListener가 먹힘)
         const Yvalue = characteristic2.readValue(); //Ysensor 값 읽기
 
+        //handleXangleChanged , handleYangleChanged에서 받은 Count 수
         if (XCount >= 3 || YCount >= 3) {
           //3초 이상 X와 Y가 정상범위가 아닐때
           setState1("X or Y의 자세가 불안정해요 !"); //상태
@@ -109,6 +135,17 @@ function Header() {
           setState1("x or Y의 자세가 정상적입니다"); //상태
           setState2("x or Y를 이렇게만 유지하세요!"); //조언
         }
+
+        if (Xboolean == true && Yboolean == true) {
+          Storage.Duplicated++;
+        }
+        localStorage.setItem(ConvertedStartTime, JSON.stringify(Storage));
+
+        const SavedStorage = localStorage.getItem(ConvertedStartTime);
+        if (SavedStorage != null) {
+          ParsedStorage = JSON.parse(SavedStorage);
+        }
+        setStorageData((prevState) => ParsedStorage);
       }, 1000);
     } catch (error) {
       console.log("Argh! " + error);
@@ -132,20 +169,27 @@ function Header() {
       buffer[i] = event.target.value.getUint8(i).toString(16);
     }
     const bufferMerge = buffer.join("");
-    const Xanglevalue = hex2a(bufferMerge);
+    Xanglevalue = hex2a(bufferMerge);
 
     setXangle(Xanglevalue); //Xangle useState에 설정
 
     if (Xanglevalue > 15 || Xanglevalue < -15) {
       //정상범위가 아닐때
       XCount++; //1초마다 interval인 상태, 정상범위가 1초간 아닐때 +1
+      Storage.XTimeStorage++;
+      Xboolean = true;
+
       if (XCount >= 3) {
         //3초간 정상범위가 아니면 진동울림
+        if (XCount == 3) {
+          Storage.XVibrateStorage++;
+        }
         console.log("3초이상 X value 비정상적 : 진동울림 ");
       }
     } else {
       //정상범위로 돌아오면
       XCount = 0; //초기화
+      Xboolean = false;
     }
   }
 
@@ -156,17 +200,22 @@ function Header() {
       buffer[i] = event.target.value.getUint8(i).toString(16);
     }
     const bufferMerge = buffer.join("");
-    const Yanglevalue = hex2a(bufferMerge);
+    Yanglevalue = hex2a(bufferMerge);
 
     setYangle(Yanglevalue);
     if (Yanglevalue > 15 || Yanglevalue < -15) {
       YCount++;
-      localStorage.setItem("OverValue");
+      Yboolean = true;
+      Storage.YTimeStorage++;
       if (YCount >= 3) {
+        if (YCount == 3) {
+          Storage.YVibrateStorage++;
+        }
         console.log("3초이상 Y value 비정상적 : 진동울림 ");
       }
     } else {
       YCount = 0;
+      Yboolean = false;
     }
   }
 
@@ -277,6 +326,13 @@ function Header() {
           )}
           {Disconnected ? "" : <p>종료시간 : {EndTimeState}</p>}
           {Disconnected ? "" : <p>총 경과 시간 : {TotalTimeState}</p>}
+          <h2>
+            자세가 안좋았던 시간 :
+            {StorageData.XTimeStorage +
+              StorageData.YTimeStorage -
+              StorageData.Duplicated}{" "}
+            초
+          </h2>
         </div>
       </div>
     </div>
