@@ -3,16 +3,16 @@ import { useState, useEffect } from "react";
 import styles from "./Header.module.css";
 
 function Header() {
-  const [connected, setConnect] = useState(true);
-  const [Disconnected, setDisConnect] = useState(true);
-  const [device, setDevice] = useState("");
-  const [Xangle, setXangle] = useState("");
-  const [Yangle, setYangle] = useState("");
+  const [connected, setConnect] = useState(true); //연결 확인
+  const [Disconnected, setDisConnect] = useState(true); //연결 해제 확인
+  const [device, setDevice] = useState(""); //device의 정보 받기 : 이름 받는데 사용
+  const [Xangle, setXangle] = useState(""); //Xangle 정보
+  const [Yangle, setYangle] = useState(""); //Yangle 정보
   const [state1, setState1] = useState("자세가 정상적입니다"); //상태
   const [state2, setState2] = useState("이렇게만 유지하세요!"); //조언
-  const [StartTimeState, setStartTimeState] = useState(""); //시간
-  const [EndTimeState, setEndTimeState] = useState(""); //시간
-  const [TotalTimeState, setTotalTimeState] = useState("");
+  const [StartTimeState, setStartTimeState] = useState(""); //bluetooth 연결한 시작 시간
+  const [EndTimeState, setEndTimeState] = useState(""); //bluetooth 연결해제된 종료 시간
+  const [TotalTimeState, setTotalTimeState] = useState(""); //총 경과시간
 
   let XCount = 0;
   let YCount = 0;
@@ -31,10 +31,12 @@ function Header() {
   let StartTimeByGetTime = 0;
   const [startButton, setStartButton] = useState(false);
   async function onClickBluetooth() {
+    //bluetooth 연결시 버튼
     try {
+      //연결되는 장치 조건 필터링, 추후에 해당 기기만 연결되게 변경 예정
       const deviceActivate = await navigator.bluetooth.requestDevice({
         acceptAllDevices: true,
-        optionalServices: ["66df5109-edde-4f8a-a5e1-02e02a69cbd5"],
+        optionalServices: ["66df5109-edde-4f8a-a5e1-02e02a69cbd5"], //기기 uuid
       });
       bluetoothDevice = deviceActivate;
       StartTime = Date.now();
@@ -47,14 +49,16 @@ function Header() {
       setStartTimeState(ConvertedStartTime);
       console.log("Connecting to GATT Server...");
       bluetoothDevice.addEventListener(
+        //초반 연결 해제 감지
         "gattserverdisconnected",
         onDisconnected
       );
-      connect();
-      const server = await bluetoothDevice.gatt.connect();
+      connect(); //자동 재연결 (작동 잘 안됨)
+      const server = await bluetoothDevice.gatt.connect(); //서버에 연결
 
       //Service
       const service = await server.getPrimaryService(
+        //서비스에 연결, 서비스에는 x와 y의 characteristic가 존재
         "66df5109-edde-4f8a-a5e1-02e02a69cbd5"
       );
 
@@ -69,39 +73,41 @@ function Header() {
       );
 
       characteristic.addEventListener(
+        //X sensor 변화감지
         "characteristicvaluechanged",
         handleXangleChanged
       );
 
       characteristic2.addEventListener(
+        //Y sensor 변화감지
         "characteristicvaluechanged",
         handleYangleChanged
       );
       const interval = setInterval(() => {
+        //1초마다 interval
         bluetoothDevice.addEventListener(
+          //연결 해제 감지
           "gattserverdisconnected",
           onDisconnected
         );
-        console.log(disConnection);
+
         if (disConnection) {
+          //연결해제시 interval 종료
           clearInterval(interval);
-          console.log("disconnection 접근");
-          console.log("시작 시간 : " + ConvertedStartTime);
-          console.log("종료 시간 : " + ConvertedEndTime);
-          console.log("Total time은? : " + TotalTime);
           disConnection = false;
-          connect();
+          connect(); //재연결 시도(작동잘안함)
         }
         CCount++;
-        const Xvalue = characteristic.readValue();
-        const Yvalue = characteristic2.readValue();
-        console.log("this is interval" + CCount);
+        const Xvalue = characteristic.readValue(); //Xsensor 값 읽기 (이걸 포함해야 characteristicvaluechanged 의 EventListener가 먹힘)
+        const Yvalue = characteristic2.readValue(); //Ysensor 값 읽기
+
         if (XCount >= 3 || YCount >= 3) {
-          setState1("X or Y의 자세가 불안정해요 !");
-          setState2("거북목은 안좋아요 ㅠㅠ");
+          //3초 이상 X와 Y가 정상범위가 아닐때
+          setState1("X or Y의 자세가 불안정해요 !"); //상태
+          setState2("거북목은 안좋아요 ㅠㅠ"); //조언
         } else {
-          setState1("x or Y의 자세가 정상적입니다");
-          setState2("x or Y를 이렇게만 유지하세요!");
+          setState1("x or Y의 자세가 정상적입니다"); //상태
+          setState2("x or Y를 이렇게만 유지하세요!"); //조언
         }
       }, 1000);
     } catch (error) {
@@ -110,6 +116,7 @@ function Header() {
   }
 
   function hex2a(hexx) {
+    //hex to Dec 변환
     let hex = hexx.toString(); //force conversion
     let str = "";
     for (let i = 0; i < hex.length; i += 2)
@@ -118,27 +125,31 @@ function Header() {
   }
 
   function handleXangleChanged(event) {
+    //X 변화 감지
+    //16진수 10진수로 변환
     const length = event.target.value.byteLength;
     for (let i = 0; i < length; i++) {
       buffer[i] = event.target.value.getUint8(i).toString(16);
     }
     const bufferMerge = buffer.join("");
     const Xanglevalue = hex2a(bufferMerge);
-    setXangle(Xanglevalue);
-    // if (CCount % 10) {
-    //   localStorage.setItem(CCount, Xanglevalue);
-    // }
+
+    setXangle(Xanglevalue); //Xangle useState에 설정
+
     if (Xanglevalue > 15 || Xanglevalue < -15) {
-      XCount++;
+      //정상범위가 아닐때
+      XCount++; //1초마다 interval인 상태, 정상범위가 1초간 아닐때 +1
       if (XCount >= 3) {
+        //3초간 정상범위가 아니면 진동울림
         console.log("3초이상 X value 비정상적 : 진동울림 ");
       }
     } else {
-      XCount = 0;
+      //정상범위로 돌아오면
+      XCount = 0; //초기화
     }
-    console.log("Xangle" + Xanglevalue);
   }
 
+  //위와 같음, Y sensor 변화감지
   function handleYangleChanged(event) {
     const length = event.target.value.byteLength;
     for (let i = 0; i < length; i++) {
@@ -150,18 +161,16 @@ function Header() {
     setYangle(Yanglevalue);
     if (Yanglevalue > 15 || Yanglevalue < -15) {
       YCount++;
+      localStorage.setItem("OverValue");
       if (YCount >= 3) {
         console.log("3초이상 Y value 비정상적 : 진동울림 ");
       }
-      console.log("YCount 횟수 " + YCount);
     } else {
       YCount = 0;
     }
-    // localStorage.setItem(CCount, Yanglevalue);
-    console.log("YCount 횟수 " + YCount);
-    console.log("Yangle" + Yanglevalue);
   }
 
+  //재연결 시도 함수
   async function connect() {
     exponentialBackoff(
       3 /* max retries */,
@@ -179,20 +188,21 @@ function Header() {
     );
   }
 
+  //연결 해제 함수
   async function onDisconnected() {
-    console.log(ConvertedStartTime);
     disConnection = true;
     setDisConnect(false);
     EndTime = Date.now();
     let EndDate = new Date(EndTime);
     EndTimeByGetTime = EndDate.getTime();
     ConvertedEndTime = timeConvert(EndTime);
-    TotalTime = (EndTimeByGetTime - StartTimeByGetTime) / 1000;
+    TotalTime = (EndTimeByGetTime - StartTimeByGetTime) / 1000; //경과시간 계산
     setEndTimeState(ConvertedEndTime);
     setTotalTimeState(TotalTime);
-    await device.gatt.disconnect();
+    await device.gatt.disconnect(); //연결해제
   }
 
+  //재연결 시도 함수를 위한 유틸함수
   /* Utils */
 
   // This function keeps calling "toTry" until promise resolves or has
@@ -217,6 +227,7 @@ function Header() {
     console.log("[" + new Date().toJSON().substr(11, 8) + "] " + text);
   }
 
+  //시간 계산
   function timeConvert(time) {
     let date = new Date(time);
     let year = date.getFullYear().toString().slice(-2); //년도 뒤에 두자리
