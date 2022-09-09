@@ -14,6 +14,8 @@ function Header() {
   const [EndTimeState, setEndTimeState] = useState(""); //시간
   const [TotalTimeState, setTotalTimeState] = useState("");
 
+  let XCount = 0;
+  let YCount = 0;
   let disConnection = false;
   let ConvertedTotalTime = 0;
   let CCount = 0;
@@ -21,6 +23,7 @@ function Header() {
   let StartTime = 0;
   let EndTime = 0;
   let TotalTime = 0;
+
   let ConvertedStartTime = 0;
   let ConvertedEndTime = 0;
   let bluetoothDevice;
@@ -115,8 +118,17 @@ function Header() {
     const bufferMerge = buffer.join("");
     const Xanglevalue = hex2a(bufferMerge);
     setXangle(Xanglevalue);
-    if (CCount % 10) {
-      localStorage.setItem(CCount, Xanglevalue);
+    // if (CCount % 10) {
+    //   localStorage.setItem(CCount, Xanglevalue);
+    // }
+    if (Xanglevalue > 15 || Xanglevalue < -15) {
+      XCount++;
+      if (XCount >= 3) {
+        console.log("3초이상 X value 비정상적 : 진동울림 ");
+      }
+      console.log("XCount 횟수 " + XCount);
+    } else {
+      XCount = 0;
     }
     console.log("Xangle" + Xanglevalue);
   }
@@ -130,7 +142,16 @@ function Header() {
     const Yanglevalue = hex2a(bufferMerge);
 
     setYangle(Yanglevalue);
-    localStorage.setItem(CCount, Yanglevalue);
+    if (Yanglevalue > 15 || Yanglevalue < -15) {
+      YCount++;
+      if (YCount >= 3) {
+        console.log("3초이상 Y value 비정상적 : 진동울림 ");
+      }
+      console.log("YCount 횟수 " + YCount);
+    } else {
+      YCount = 0;
+    }
+    // localStorage.setItem(CCount, Yanglevalue);
     console.log("Yangle" + Yanglevalue);
   }
 
