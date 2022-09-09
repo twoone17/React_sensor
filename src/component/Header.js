@@ -8,8 +8,8 @@ function Header() {
   const [device, setDevice] = useState("");
   const [Xangle, setXangle] = useState("");
   const [Yangle, setYangle] = useState("");
-  const [state1, setState1] = useState("허리가 평균보다 8도 굽어있어요"); //상태
-  const [state2, setState2] = useState("허리를 피고 앉아봐요!"); //조언
+  const [state1, setState1] = useState("자세가 정상적입니다"); //상태
+  const [state2, setState2] = useState("이렇게만 유지하세요!"); //조언
   const [StartTimeState, setStartTimeState] = useState(""); //시간
   const [EndTimeState, setEndTimeState] = useState(""); //시간
   const [TotalTimeState, setTotalTimeState] = useState("");
@@ -96,6 +96,13 @@ function Header() {
         const Xvalue = characteristic.readValue();
         const Yvalue = characteristic2.readValue();
         console.log("this is interval" + CCount);
+        if (XCount >= 3 || YCount >= 3) {
+          setState1("X or Y의 자세가 불안정해요 !");
+          setState2("거북목은 안좋아요 ㅠㅠ");
+        } else {
+          setState1("x or Y의 자세가 정상적입니다");
+          setState2("x or Y를 이렇게만 유지하세요!");
+        }
       }, 1000);
     } catch (error) {
       console.log("Argh! " + error);
@@ -126,7 +133,6 @@ function Header() {
       if (XCount >= 3) {
         console.log("3초이상 X value 비정상적 : 진동울림 ");
       }
-      console.log("XCount 횟수 " + XCount);
     } else {
       XCount = 0;
     }
@@ -152,6 +158,7 @@ function Header() {
       YCount = 0;
     }
     // localStorage.setItem(CCount, Yanglevalue);
+    console.log("YCount 횟수 " + YCount);
     console.log("Yangle" + Yanglevalue);
   }
 
