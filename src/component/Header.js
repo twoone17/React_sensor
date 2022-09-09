@@ -9,13 +9,19 @@ function Header() {
   const [Yangle, setYangle] = useState("");
   const [state1, setState1] = useState("허리가 평균보다 8도 굽어있어요"); //상태
   const [state2, setState2] = useState("허리를 피고 앉아봐요!"); //조언
+  const [StartTimeState, setStartTimeState] = useState(""); //시간
   let disConnection = false;
-  let TotalTime = 0;
+  let ConvertedTotalTime = 0;
   let CCount = 0;
   const buffer = [];
-  let startTime = 0;
-  let endTime = 0;
+  let StartTime = 0;
+  let EndTime = 0;
+  let TotalTime = 0;
+  let ConvertedStartTime = 0;
+  let ConvertedEndTime = 0;
   let bluetoothDevice;
+  let EndTimeByGetTime = 0;
+  let StartTimeByGetTime = 0;
   const [startButton, setStartButton] = useState(false);
   async function onClickBluetooth() {
     try {
@@ -24,10 +30,14 @@ function Header() {
         optionalServices: ["66df5109-edde-4f8a-a5e1-02e02a69cbd5"],
       });
       bluetoothDevice = deviceActivate;
-      let StartTime = timeConvert(Date.now());
-      console.log(StartTime);
+      StartTime = Date.now();
+      let Startdate = new Date(StartTime);
+      StartTimeByGetTime = Startdate.getTime();
+      ConvertedStartTime = timeConvert(StartTime);
+      console.log(ConvertedStartTime);
       setConnect(false);
       setDevice(deviceActivate);
+      setStartTimeState(ConvertedStartTime);
       console.log("Connecting to GATT Server...");
       bluetoothDevice.addEventListener(
         "gattserverdisconnected",
@@ -69,8 +79,11 @@ function Header() {
         if (disConnection) {
           clearInterval(interval);
           console.log("disconnection 접근");
+          console.log("시작 시간 : " + ConvertedStartTime);
+          console.log("종료 시간 : " + ConvertedEndTime);
           console.log("Total time은? : " + TotalTime);
-          return;
+          disConnection = false;
+          connect();
         }
         CCount++;
         const Xvalue = characteristic.readValue();
@@ -117,15 +130,6 @@ function Header() {
     console.log("Yangle" + Yanglevalue);
   }
 
-  //device 연결 해제 여부 확인
-  // function onDisconnected(event) {
-  //   const device = event.target;
-  //   console.log(`Device ${device.name} is disconnected.`);
-  //   endTime = Date.now();
-  //   const TotalTime = endTime - startTime;
-  //   console.log(TotalTime);
-  // }
-
   async function connect() {
     exponentialBackoff(
       3 /* max retries */,
@@ -144,12 +148,14 @@ function Header() {
   }
 
   async function onDisconnected() {
+    console.log(ConvertedStartTime);
     disConnection = true;
-    endTime = timeConvert(Date.now());
-    TotalTime = timeConvert(endTime - startTime);
-    console.log(TotalTime);
+    EndTime = Date.now();
+    let EndDate = new Date(EndTime);
+    EndTimeByGetTime = EndDate.getTime();
+    ConvertedEndTime = timeConvert(EndTime);
+    TotalTime = (EndTimeByGetTime - StartTimeByGetTime) / 1000;
     await device.gatt.disconnect();
-    // connect();
   }
 
   /* Utils */
@@ -204,7 +210,7 @@ function Header() {
     <div>
       <div className={styles.row}>
         <button onClick={onClickBluetooth}>Click to connect bluetooth</button>
-        {connect ? (
+        {connected ? (
           <h4>Device Loading...</h4>
         ) : (
           <h4>Device name : {device.name}</h4>
@@ -218,7 +224,11 @@ function Header() {
         <div>
           <h3 className={styles.s1}>{state1}</h3>
           <p className={styles.s2}>{state2}</p>
-          <a>112</a>
+          {connected ? (
+            <a>기기를 연결해서 측정을 시작해보세요 ! </a>
+          ) : (
+            <a>시작시간 : {StartTimeState}</a>
+          )}
         </div>
       </div>
     </div>
