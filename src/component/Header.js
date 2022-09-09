@@ -3,17 +3,32 @@ import { useState, useEffect } from "react";
 import styles from "./Header.module.css";
 
 function Header() {
-  const [connect, setConnect] = useState(true);
+  const [connected, setConnect] = useState(true);
+  const [Disconnected, setDisConnect] = useState(true);
   const [device, setDevice] = useState("");
   const [Xangle, setXangle] = useState("");
   const [Yangle, setYangle] = useState("");
-  const [state1, setState1] = useState("허리가 평균보다 8도 굽어있어요"); //상태
-  const [state2, setState2] = useState("허리를 피고 앉아봐요!"); //조언
-  const [count, setCount] = useState(0);
+  const [state1, setState1] = useState("자세가 정상적입니다"); //상태
+  const [state2, setState2] = useState("이렇게만 유지하세요!"); //조언
+  const [StartTimeState, setStartTimeState] = useState(""); //시간
+  const [EndTimeState, setEndTimeState] = useState(""); //시간
+  const [TotalTimeState, setTotalTimeState] = useState("");
+
+  let XCount = 0;
+  let YCount = 0;
+  let disConnection = false;
+  let ConvertedTotalTime = 0;
   let CCount = 0;
   const buffer = [];
-  let startTime = 0;
-  let endTime = 0;
+  let StartTime = 0;
+  let EndTime = 0;
+  let TotalTime = 0;
+
+  let ConvertedStartTime = 0;
+  let ConvertedEndTime = 0;
+  let bluetoothDevice;
+  let EndTimeByGetTime = 0;
+  let StartTimeByGetTime = 0;
   const [startButton, setStartButton] = useState(false);
   async function onClickBluetooth() {
     try {
@@ -21,13 +36,22 @@ function Header() {
         acceptAllDevices: true,
         optionalServices: ["66df5109-edde-4f8a-a5e1-02e02a69cbd5"],
       });
-      startTime = Date.now();
+      bluetoothDevice = deviceActivate;
+      StartTime = Date.now();
+      let Startdate = new Date(StartTime);
+      StartTimeByGetTime = Startdate.getTime();
+      ConvertedStartTime = timeConvert(StartTime);
+      console.log(ConvertedStartTime);
       setConnect(false);
       setDevice(deviceActivate);
-      setCount((count) => count + 1);
+      setStartTimeState(ConvertedStartTime);
       console.log("Connecting to GATT Server...");
-      deviceActivate.addEventListener("gattserverdisconnected", onDisconnected);
-      const server = await deviceActivate.gatt.connect();
+      bluetoothDevice.addEventListener(
+        "gattserverdisconnected",
+        onDisconnected
+      );
+      connect();
+      const server = await bluetoothDevice.gatt.connect();
 
       //Service
       const service = await server.getPrimaryService(
@@ -43,8 +67,6 @@ function Header() {
       const characteristic2 = await service.getCharacteristic(
         "baad41b2-f12e-4322-9ba6-22cd9ce09832"
       );
-      console.log("count" + count);
-      setCount((count) => count + 1);
 
       characteristic.addEventListener(
         "characteristicvaluechanged",
@@ -55,11 +77,32 @@ function Header() {
         "characteristicvaluechanged",
         handleYangleChanged
       );
-      setInterval(() => {
+      const interval = setInterval(() => {
+        bluetoothDevice.addEventListener(
+          "gattserverdisconnected",
+          onDisconnected
+        );
+        console.log(disConnection);
+        if (disConnection) {
+          clearInterval(interval);
+          console.log("disconnection 접근");
+          console.log("시작 시간 : " + ConvertedStartTime);
+          console.log("종료 시간 : " + ConvertedEndTime);
+          console.log("Total time은? : " + TotalTime);
+          disConnection = false;
+          connect();
+        }
         CCount++;
         const Xvalue = characteristic.readValue();
         const Yvalue = characteristic2.readValue();
         console.log("this is interval" + CCount);
+        if (XCount >= 3 || YCount >= 3) {
+          setState1("X or Y의 자세가 불안정해요 !");
+          setState2("거북목은 안좋아요 ㅠㅠ");
+        } else {
+          setState1("x or Y의 자세가 정상적입니다");
+          setState2("x or Y를 이렇게만 유지하세요!");
+        }
       }, 1000);
     } catch (error) {
       console.log("Argh! " + error);
@@ -82,8 +125,16 @@ function Header() {
     const bufferMerge = buffer.join("");
     const Xanglevalue = hex2a(bufferMerge);
     setXangle(Xanglevalue);
-    if (CCount % 10) {
-      localStorage.setItem(CCount, Xanglevalue);
+    // if (CCount % 10) {
+    //   localStorage.setItem(CCount, Xanglevalue);
+    // }
+    if (Xanglevalue > 15 || Xanglevalue < -15) {
+      XCount++;
+      if (XCount >= 3) {
+        console.log("3초이상 X value 비정상적 : 진동울림 ");
+      }
+    } else {
+      XCount = 0;
     }
     console.log("Xangle" + Xanglevalue);
   }
@@ -96,26 +147,105 @@ function Header() {
     const bufferMerge = buffer.join("");
     const Yanglevalue = hex2a(bufferMerge);
 
-    setCount(count + 1);
     setYangle(Yanglevalue);
-    localStorage.setItem(CCount, Yanglevalue);
+    if (Yanglevalue > 15 || Yanglevalue < -15) {
+      YCount++;
+      if (YCount >= 3) {
+        console.log("3초이상 Y value 비정상적 : 진동울림 ");
+      }
+      console.log("YCount 횟수 " + YCount);
+    } else {
+      YCount = 0;
+    }
+    // localStorage.setItem(CCount, Yanglevalue);
+    console.log("YCount 횟수 " + YCount);
     console.log("Yangle" + Yanglevalue);
   }
 
-  //device 연결 해제 여부 확인
-  function onDisconnected(event) {
-    const device = event.target;
-    console.log(`Device ${device.name} is disconnected.`);
-    endTime = Date.now();
-    const TotalTime = endTime - startTime;
-    console.log(TotalTime);
+  async function connect() {
+    exponentialBackoff(
+      3 /* max retries */,
+      2 /* seconds delay */,
+      async function toTry() {
+        time("Connecting to Bluetooth Device... ");
+        await bluetoothDevice.gatt.connect();
+      },
+      function success() {
+        console.log("> Bluetooth Device connected. Try disconnect it now.");
+      },
+      function fail() {
+        time("Failed to reconnect.");
+      }
+    );
+  }
+
+  async function onDisconnected() {
+    console.log(ConvertedStartTime);
+    disConnection = true;
+    setDisConnect(false);
+    EndTime = Date.now();
+    let EndDate = new Date(EndTime);
+    EndTimeByGetTime = EndDate.getTime();
+    ConvertedEndTime = timeConvert(EndTime);
+    TotalTime = (EndTimeByGetTime - StartTimeByGetTime) / 1000;
+    setEndTimeState(ConvertedEndTime);
+    setTotalTimeState(TotalTime);
+    await device.gatt.disconnect();
+  }
+
+  /* Utils */
+
+  // This function keeps calling "toTry" until promise resolves or has
+  // retried "max" number of times. First retry has a delay of "delay" seconds.
+  // "success" is called upon success.
+  async function exponentialBackoff(max, delay, toTry, success, fail) {
+    try {
+      const result = await toTry();
+      success(result);
+    } catch (error) {
+      if (max === 0) {
+        return fail();
+      }
+      time("Retrying in " + delay + "s... (" + max + " tries left)");
+      setTimeout(function () {
+        exponentialBackoff(--max, delay * 2, toTry, success, fail);
+      }, delay * 1000);
+    }
+  }
+
+  function time(text) {
+    console.log("[" + new Date().toJSON().substr(11, 8) + "] " + text);
+  }
+
+  function timeConvert(time) {
+    let date = new Date(time);
+    let year = date.getFullYear().toString().slice(-2); //년도 뒤에 두자리
+    let month = ("0" + (date.getMonth() + 1)).slice(-2); //월 2자리 (01, 02 ... 12)
+    let day = ("0" + date.getDate()).slice(-2); //일 2자리 (01, 02 ... 31)
+    let hour = ("0" + date.getHours()).slice(-2); //시 2자리 (00, 01 ... 23)
+    let minute = ("0" + date.getMinutes()).slice(-2); //분 2자리 (00, 01 ... 59)
+    let second = ("0" + date.getSeconds()).slice(-2); //초 2자리 (00, 01 ... 59)
+
+    let returnDate =
+      year +
+      "." +
+      month +
+      "." +
+      day +
+      ". " +
+      hour +
+      ":" +
+      minute +
+      ":" +
+      second;
+    return returnDate;
   }
 
   return (
     <div>
       <div className={styles.row}>
         <button onClick={onClickBluetooth}>Click to connect bluetooth</button>
-        {connect ? (
+        {connected ? (
           <h4>Device Loading...</h4>
         ) : (
           <h4>Device name : {device.name}</h4>
@@ -129,7 +259,13 @@ function Header() {
         <div>
           <h3 className={styles.s1}>{state1}</h3>
           <p className={styles.s2}>{state2}</p>
-          <a></a>
+          {connected ? (
+            <p>기기를 연결해서 측정을 시작해보세요 ! </p>
+          ) : (
+            <p>시작시간 : {StartTimeState}</p>
+          )}
+          {Disconnected ? "" : <p>종료시간 : {EndTimeState}</p>}
+          {Disconnected ? "" : <p>총 경과 시간 : {TotalTimeState}</p>}
         </div>
       </div>
     </div>
