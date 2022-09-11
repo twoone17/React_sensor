@@ -319,7 +319,7 @@ function Header() {
           <h2 className={styles.xy}>XAngle : {Xangle} </h2>
           <br></br>
           <h2 className={styles.xy}>YAngle : {Yangle} </h2>
-        </div>
+        </div>     
         <div>
           <h3 className={styles.s1}>{state1}</h3>
           <p className={styles.s2}>{state2}</p>
