@@ -1,6 +1,7 @@
 import React from "react";
 import AnalysisString from "../component/AnalysisString";
 import { useState, useEffect } from "react";
+import AnalysisHistory from "../component/AnalysisHistory";
 import {
   PieChart,
   Line,
