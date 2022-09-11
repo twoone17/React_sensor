@@ -1,15 +1,91 @@
 import React from "react";
+import AnalysisString from "../component/AnalysisString";
+import { useState, useEffect } from "react";
 //import { PieChart } from 'react-minimal-pie-chart';
 import {
-  PieChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Pie,
-} from 'recharts';
+  PieChart,
+  Line,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  Legend,
+  Pie,
+  Cell,
+} from "recharts";
 
 function Analysis() {
-  const data1 = localStorage.getItem("22.09.11. 15:13:06");
+  let ParsedStorage;
+  let localStorageKey = [];
+  let localStorageValue = [];
+  let date;
+  let dateChange = [];
+  const [StorageData, setStorageData] = useState([
+    {
+      XTimeStorage: 0,
+      YTimeStorage: 0,
+      XVibrateStorage: 0,
+      YVibrateStorage: 0,
+      Duplicated: 0,
+      TotalTimeStorage: 0,
+    },
+  ]);
+  for (let i = 0; i < localStorage.length; i++) {
+    const key = localStorage.key(i);
+    localStorageKey[i] = localStorage.key(i);
+    const value = localStorage.getItem(key);
+    localStorageValue[i] = value;
+  }
+
+  localStorageKey.sort();
+  localStorageKey.reverse();
+  date = localStorageKey[0].substring(0, 8);
+  console.log(localStorageKey);
+  //localStorage값 배열에 저장
+
+  //가장 최신(Home에서 작동중인 상태 분석)
+  const Storage = localStorageValue[0];
+  if (Storage != null) {
+    ParsedStorage = JSON.parse(Storage);
+  }
+
+  for (let i = 0; i < localStorageKey.length; i++) {
+    if (!localStorageKey[i].includes(date)) {
+      console.log("날짜 변경 index" + i);
+      dateChange.push(i);
+    }
+    date = localStorageKey[i].substring(0, 8);
+  }
+
+  dateChange.forEach((item) => console.log(item));
+
+  const data1 = Storage;
   const data2 = JSON.parse(data1);
-  const data02 = data2;
-  
-  
+  console.log(data2);
+  const data02 = [
+    {
+      name: "X만 안좋았던 시간",
+      value: data2.XTimeStorage,
+    },
+    {
+      name: "Y만 안좋았던 시간",
+      value: data2.YTimeStorage,
+    },
+    {
+      name: "X Y가 모두 안좋았던 시간",
+      value: data2.Duplicated,
+    },
+    {
+      name: "자세가 좋았던 시간",
+      value: parseInt(
+        data2.TotalTimeStorage -
+          (data2.XTimeStorage + data2.YTimeStorage - data2.Duplicated)
+      ),
+    },
+  ];
+
+  const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
+
   return (
     <div className="back">
       <PieChart width={730} height={250}>
@@ -19,13 +95,19 @@ function Analysis() {
           nameKey="name"
           cx="50%"
           cy="50%"
-          fill="#82ca9d"
-          label
+          label="name"
+          fill="green"
+          {...data02.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+          ))}
         />
+        <Tooltip />
+        <Legend />
+        <Line type="monotone" dataKey="uv" stroke="#ff7300" />
       </PieChart>
+      <AnalysisString name="test" />
     </div>
   );
 }
-  
-export default Analysis;
 
+export default Analysis;
