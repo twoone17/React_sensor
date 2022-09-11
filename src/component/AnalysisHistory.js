@@ -2,9 +2,10 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { PieChart } from "react-minimal-pie-chart";
 function AnalysisHistory({ localStorageKey, localStorageValue, dateChange }) {
-  console.log(localStorageKey);
-  console.log(localStorageValue);
-  console.log(dateChange.length);
+  const [state1, setState1] = useState("start");
+  // const [localStoragekeyState, setlocalStorageKeyState] = useState([]);
+  let storageArray = [];
+  const [storageArraystate, SetstorageArraystate] = useState([]);
 
   function ShowDateLog() {
     let NewDate = localStorageKey[0].substring(0, 8);
@@ -17,12 +18,37 @@ function AnalysisHistory({ localStorageKey, localStorageValue, dateChange }) {
     }
     DateSet.forEach((element) => Newarray.push(element));
 
+    const HandleOnClick = (date, e) => {
+      storageArray = [];
+      SetstorageArraystate([]);
+      for (let i = 0; i < localStorageKey.length; i++) {
+        if (localStorageKey[i].includes(date)) {
+          console.log(localStorageKey[i]);
+          // setlocalStorageKeyState([localStorageKey[i], localStoragekeyState]);
+          storageArray.push(localStorageKey[i]);
+        }
+      }
+      console.log(storageArray);
+      // console.log("Please" + localStoragekeyState);
+      setState1(date);
+      SetstorageArraystate((storageArraystate) => [
+        ...storageArraystate,
+        storageArray,
+      ]);
+    };
+
     return (
-      <ul>
-        {Newarray.map((item) => (
-          <li key={item}>{item}</li>
-        ))}
-      </ul>
+      <div>
+        <ul>
+          {Newarray.map((item, index) => (
+            <li key={item} onClick={(e) => HandleOnClick(item, e)}>
+              {item}
+            </li>
+          ))}
+        </ul>
+        {state1}의 날짜
+        <p>{storageArraystate}</p>
+      </div>
     );
   }
 

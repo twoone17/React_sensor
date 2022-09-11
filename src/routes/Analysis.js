@@ -46,16 +46,13 @@ function Analysis() {
     localStorageKey[i] = Array.from(SortedStorage.keys())[i];
     localStorageValue[i] = Array.from(SortedStorage.values())[i];
   }
-  console.log("storageKey " + localStorageKey);
-  console.log("storageValue " + localStorageValue);
-  console.log(localStorageValue[0].TotalTimeStorage)
+
 
   Storage = localStorageValue[0];
   if (Storage != null) {
     ParsedStorage = JSON.parse(Storage);
   }
 
-  //console.log(ParsedStorage);
 
   // for (let i = 0; i < localStorageKey.length; i++) {
   //   if (!localStorageKey[i].includes(date)) {
