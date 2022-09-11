@@ -21,6 +21,8 @@ function Analysis() {
   let localStorageValue = [];
   let date;
   let dateChange = [];
+
+  let StorageMap = new Map(); //TODO:
   const [StorageData, setStorageData] = useState([
     {
       XTimeStorage: 0,
@@ -31,17 +33,19 @@ function Analysis() {
       TotalTimeStorage: 0,
     },
   ]);
+
   for (let i = 0; i < localStorage.length; i++) {
     const key = localStorage.key(i);
-    localStorageKey[i] = localStorage.key(i);
     const value = localStorage.getItem(key);
-    localStorageValue[i] = value;
+    StorageMap.set(localStorage.key(i), localStorage.getItem(key));
   }
 
-  localStorageKey.sort();
-  localStorageKey.reverse();
-  date = localStorageKey[0].substring(0, 8);
-  console.log(localStorageKey);
+  const SortedMap = new Map([...StorageMap].sort().reverse());
+  console.log(SortedMap);
+  // localStorageKey.sort();
+  // localStorageKey.reverse();
+  // date = localStorageKey[0].substring(0, 8);
+  // console.log(localStorageKey);
   //localStorage값 배열에 저장
 
   //가장 최신(Home에서 작동중인 상태 분석)
