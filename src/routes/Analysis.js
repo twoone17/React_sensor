@@ -46,15 +46,17 @@ function Analysis() {
     localStorageKey[i] = Array.from(SortedStorage.keys())[i];
     localStorageValue[i] = Array.from(SortedStorage.values())[i];
   }
-  console.log("storageKey" + localStorageKey);
-  console.log("storageValue" + localStorageValue);
+  console.log("storageKey " + localStorageKey);
+  console.log("storageValue " + localStorageValue);
+  console.log(localStorageValue[0].TotalTimeStorage)
 
   Storage = localStorageValue[0];
   if (Storage != null) {
     ParsedStorage = JSON.parse(Storage);
   }
 
-  console.log(ParsedStorage);
+  //console.log(ParsedStorage);
+
   // for (let i = 0; i < localStorageKey.length; i++) {
   //   if (!localStorageKey[i].includes(date)) {
   //     //console.log("날짜 변경 index" + i);
@@ -71,6 +73,11 @@ function Analysis() {
 
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
+  
+
+  
+
+  function Linechart() {
   let lvalue = [];
 
   for (let i = 0; i < 4; i++) {
@@ -82,34 +89,32 @@ function Analysis() {
       localStorageValue[i].TotalTimeStorage;
   }
 
-  const data01 = [
-    {
-      name: localStorageKey[5],
-      value: lvalue[5],
-    },
-    {
-      name: localStorageKey[4],
-      value: lvalue[4],
-    },
-    {
-      name: localStorageKey[3],
-      value: lvalue[3],
-    },
-    {
-      name: localStorageKey[2],
-      value: lvalue[2],
-    },
-    {
-      name: localStorageKey[1],
-      value: lvalue[1],
-    },
-    {
-      name: localStorageKey[0],
-      value: lvalue[0],
-    },
-  ];
-
-  function Linechart() {
+    const data01 = [
+      {
+        name: localStorageKey[5],
+        value: lvalue[5],
+      },
+      {
+        name: localStorageKey[4],
+        value: lvalue[4],
+      },
+      {
+        name: localStorageKey[3],
+        value: lvalue[3],
+      },
+      {
+        name: localStorageKey[2],
+        value: lvalue[2],
+      },
+      {
+        name: localStorageKey[1],
+        value: lvalue[1],
+      },
+      {
+        name: localStorageKey[0],
+        value: lvalue[0],
+      },
+    ];
     return (
       <LineChart
         width={730}
