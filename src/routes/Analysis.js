@@ -39,34 +39,35 @@ function Analysis() {
     const value = localStorage.getItem(key);
     StorageMap.set(localStorage.key(i), localStorage.getItem(key));
   }
+  const SortedStorage = new Map([...StorageMap].sort().reverse());
 
-  localStorageKey.sort();
-  localStorageKey.reverse();
-  date = localStorageKey[0].substring(0, 8);
-  //localStorage값 배열에 저장
+  console.log(SortedStorage);
+  for (let i = 0; i < localStorage.length; i++) {
+    localStorageKey[i] = Array.from(SortedStorage.keys())[i];
+    localStorageValue[i] = Array.from(SortedStorage.values())[i];
+  }
+  console.log("storageKey" + localStorageKey);
+  console.log("storageValue" + localStorageValue);
 
-  //가장 최신(Home에서 작동중인 상태 분석)
-  const Storage = localStorageValue[0];
+  Storage = localStorageValue[0];
   if (Storage != null) {
     ParsedStorage = JSON.parse(Storage);
   }
 
-  for (let i = 0; i < localStorageKey.length; i++) {
-    if (!localStorageKey[i].includes(date)) {
-      //console.log("날짜 변경 index" + i);
-      dateChange.push(i);
-    }
-    date = localStorageKey[i].substring(0, 8);
-  }
+  console.log(ParsedStorage);
+  // for (let i = 0; i < localStorageKey.length; i++) {
+  //   if (!localStorageKey[i].includes(date)) {
+  //     //console.log("날짜 변경 index" + i);
+  //     dateChange.push(i);
+  //   }
+  //   date = localStorageKey[i].substring(0, 8);
+  // }
 
   //dateChange.forEach((item) => console.log(item));
 
   for (let i = 0; i < localStorageValue.length; i++) {
     localStorageValue[i] = JSON.parse(localStorageValue[i]);
   }
-
-  console.log(localStorageKey);
-  console.log(localStorageValue);
 
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
@@ -175,8 +176,16 @@ function Analysis() {
 
   return (
     <div className="back">
+      <h1>현재 상태 측정 </h1>
       <Piechart />
-      <AnalysisString name="test" />
+      <AnalysisString ParsedStorage={ParsedStorage} />
+      <p></p>
+      <h1>이전 기록 확인</h1>
+      <AnalysisHistory
+        localStorageKey={localStorageKey}
+        localStorageValue={localStorageValue}
+        dateChange={dateChange}
+      />
       <Linechart />
     </div>
   );
