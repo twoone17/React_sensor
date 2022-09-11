@@ -80,28 +80,13 @@ function Analysis() {
   function Linechart() {
   let lvalue = [];
 
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < 2; i++) {
     lvalue[i] =
-      (localStorageValue[i].TotalTimeStorage -
-        (localStorageValue[i].XTimeStorage +
-          localStorageValue[i].YTimeStorage -
-          localStorageValue[i].Duplicated)) /
-      localStorageValue[i].TotalTimeStorage;
+      (localStorageValue[i].TotalTimeStorage - (localStorageValue[i].XTimeStorage + localStorageValue[i].YTimeStorage - localStorageValue[i].TotalTimeStorage))
   }
 
     const data01 = [
-      {
-        name: localStorageKey[5],
-        value: lvalue[5],
-      },
-      {
-        name: localStorageKey[4],
-        value: lvalue[4],
-      },
-      {
-        name: localStorageKey[3],
-        value: lvalue[3],
-      },
+      
       {
         name: localStorageKey[2],
         value: lvalue[2],
