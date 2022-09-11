@@ -1,6 +1,7 @@
 import React from "react";
 import AnalysisString from "../component/AnalysisString";
 import { useState, useEffect } from "react";
+import AnalysisHistory from "../component/AnalysisHistory";
 //import { PieChart } from 'react-minimal-pie-chart';
 import {
   PieChart,
@@ -88,6 +89,7 @@ function Analysis() {
 
   return (
     <div className="back">
+      <h1>현재 상태 측정 </h1>
       <PieChart width={730} height={250}>
         <Pie
           data={data02}
@@ -105,7 +107,14 @@ function Analysis() {
         <Legend />
         <Line type="monotone" dataKey="uv" stroke="#ff7300" />
       </PieChart>
-      <AnalysisString name="test" />
+      <AnalysisString ParsedStorage={ParsedStorage} />
+      <p></p>
+      <h1>이전 기록 확인</h1>
+      <AnalysisHistory
+        localStorageKey={localStorageKey}
+        localStorageValue={localStorageValue}
+        dateChange={dateChange}
+      />
     </div>
   );
 }
