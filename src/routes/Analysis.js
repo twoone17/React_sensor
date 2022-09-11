@@ -1,5 +1,5 @@
 import React from "react";
-import { PieChart } from 'react-minimal-pie-chart';
+import { PieChart } from "react-minimal-pie-chart";
 
 function Analysis({ data }) {
   return (
@@ -12,12 +12,11 @@ function Analysis({ data }) {
         ]}
         label={({ dataEntry }) => dataEntry.value}
         animate
-        //width = 
+        //width =
         //viewBoxSize = {[100, 80]}
       />
     </div>
   );
 }
-  
-export default Analysis;
 
+export default Analysis;
