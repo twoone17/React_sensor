@@ -22,7 +22,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
+    "build": "react-scripts build && shx cp build/index.html build/404.html",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "deploy": "gh-pages -d build",
@@ -46,5 +46,8 @@
       "last 1 safari version"
     ]
   },
-  "homepage": "http://twoone17.github.io/React_sensor"
+  "homepage": "http://twoone17.github.io/React_sensor",
+  "devDependencies": {
+    "shx": "^0.3.4"
+  }
 }

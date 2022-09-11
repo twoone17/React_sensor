@@ -12,7 +12,7 @@ function Navs() {
           <Navbar.Brand href={`${process.env.PUBLIC_URL}/`}>SensorApp</Navbar.Brand>
           <Nav className="me-auto">
             <Nav.Link href={`${process.env.PUBLIC_URL}/`}>Home</Nav.Link>
-            <Nav.Link href="/analysis">Analysis</Nav.Link>  
+            <Nav.Link href={`${process.env.PUBLIC_URL}/analysis`}>Analysis</Nav.Link>  
             <Nav.Link href="/analysis">Setting</Nav.Link>          
           </Nav>
         </Container>
