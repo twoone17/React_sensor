@@ -34,7 +34,7 @@ function AnalysisString(props) {
   localStorageKey.sort();
   localStorageKey.reverse();
   date = localStorageKey[0].substring(0, 8);
-  console.log(localStorageKey);
+  //console.log(localStorageKey);
   //localStorage값 배열에 저장
 
   //가장 최신(Home에서 작동중인 상태 분석)

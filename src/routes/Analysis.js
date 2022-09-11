@@ -1,7 +1,6 @@
 import React from "react";
 import AnalysisString from "../component/AnalysisString";
 import { useState, useEffect } from "react";
-//import { PieChart } from 'react-minimal-pie-chart';
 import {
   PieChart,
   Line,
@@ -12,6 +11,7 @@ import {
   Legend,
   Pie,
   Cell,
+  LineChart,
 } from "recharts";
 
 function Analysis() {
@@ -40,7 +40,6 @@ function Analysis() {
   localStorageKey.sort();
   localStorageKey.reverse();
   date = localStorageKey[0].substring(0, 8);
-  console.log(localStorageKey);
   //localStorage값 배열에 저장
 
   //가장 최신(Home에서 작동중인 상태 분석)
@@ -51,43 +50,127 @@ function Analysis() {
 
   for (let i = 0; i < localStorageKey.length; i++) {
     if (!localStorageKey[i].includes(date)) {
-      console.log("날짜 변경 index" + i);
+      //console.log("날짜 변경 index" + i);
       dateChange.push(i);
     }
     date = localStorageKey[i].substring(0, 8);
   }
 
-  dateChange.forEach((item) => console.log(item));
+  //dateChange.forEach((item) => console.log(item)); 
+  
+  for (let i = 0; i < localStorageValue.length; i++) {
+    localStorageValue[i]=JSON.parse(localStorageValue[i])
+  }
 
-  const data1 = Storage;
-  const data2 = JSON.parse(data1);
-  console.log(data2);
-  const data02 = [
-    {
-      name: "X만 안좋았던 시간",
-      value: data2.XTimeStorage,
-    },
-    {
-      name: "Y만 안좋았던 시간",
-      value: data2.YTimeStorage,
-    },
-    {
-      name: "X Y가 모두 안좋았던 시간",
-      value: data2.Duplicated,
-    },
-    {
-      name: "자세가 좋았던 시간",
-      value: parseInt(
-        data2.TotalTimeStorage -
-          (data2.XTimeStorage + data2.YTimeStorage - data2.Duplicated)
-      ),
-    },
-  ];
+  console.log(localStorageKey);
+  console.log(localStorageValue);
+
+  
+
+  
+
 
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
-  return (
-    <div className="back">
+
+
+
+
+
+
+  let lvalue = [];
+
+  for (let i = 0; i < 4; i++) {
+    lvalue[i] = (localStorageValue[i].TotalTimeStorage - (localStorageValue[i].XTimeStorage + localStorageValue[i].YTimeStorage - localStorageValue[i].Duplicated)) / localStorageValue[i].TotalTimeStorage
+  }
+  
+
+
+  const data01 = [
+    {
+      "name": localStorageKey[5],
+      "value": lvalue[5]
+    },
+    {
+      "name": localStorageKey[4],
+      "value": lvalue[4]
+    },
+    {
+      "name": localStorageKey[3],
+      "value": lvalue[3]
+    },
+    {
+      "name": localStorageKey[2],
+      "value": lvalue[2]
+    },
+    {
+      "name": localStorageKey[1],
+      "value": lvalue[1]
+    },
+    {
+      "name": localStorageKey[0],
+      "value": lvalue[0]
+    },
+    
+  ]
+
+  function Linechart() {
+    return (
+      <LineChart
+        width={730}
+        height={250}
+        data={data01}
+        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+      >
+        <CartesianGrid strokeDasharray="3 3" />
+        <XAxis dataKey="name" />
+        <YAxis />
+        <Tooltip />
+        <Legend />
+        <Line type="monotone" dataKey="value" stroke="#8884d8" />
+      </LineChart>
+    );
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+  function Piechart({Piekey, Pievalue}) {
+
+    const key = localStorageKey[0];
+    const value1 = localStorageValue[0];
+    console.log("11",value1.XTimeStorage)
+    const data02 = [
+      {
+        name: "X만 안좋았던 시간",
+        value: value1.XTimeStorage,
+      },
+      {
+        name: "Y만 안좋았던 시간",
+        value: value1.YTimeStorage,
+      },
+      {
+        name: "X Y가 모두 안좋았던 시간",
+        value: value1.Duplicated,
+      },
+      {
+        name: "자세가 좋았던 시간",
+        value: parseInt(
+          value1.TotalTimeStorage -
+            (value1.XTimeStorage + value1.YTimeStorage - value1.Duplicated)
+        ),
+      },
+    ];
+    
+    return (
       <PieChart width={730} height={250}>
         <Pie
           data={data02}
@@ -105,7 +188,25 @@ function Analysis() {
         <Legend />
         <Line type="monotone" dataKey="uv" stroke="#ff7300" />
       </PieChart>
+    )
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+  return (
+    <div className="back">
+      <Piechart />
       <AnalysisString name="test" />
+      <Linechart />
     </div>
   );
 }
