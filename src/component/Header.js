@@ -30,6 +30,7 @@ function Header() {
     XVibrateStorage: 0,
     YVibrateStorage: 0,
     Duplicated: 0,
+    TotalTimeStorage: 0,
   };
   let Xboolean = false;
   let Yboolean = false;
@@ -48,6 +49,7 @@ function Header() {
   let bluetoothDevice;
   let EndTimeByGetTime = 0;
   let StartTimeByGetTime = 0;
+
   const [startButton, setStartButton] = useState(false);
   async function onClickBluetooth() {
     //bluetooth 연결시 버튼
@@ -246,6 +248,8 @@ function Header() {
     EndTimeByGetTime = EndDate.getTime();
     ConvertedEndTime = timeConvert(EndTime);
     TotalTime = (EndTimeByGetTime - StartTimeByGetTime) / 1000; //경과시간 계산
+    Storage.TotalTimeStorage = TotalTime;
+    localStorage.setItem(ConvertedStartTime, JSON.stringify(Storage));
     setEndTimeState(ConvertedEndTime);
     setTotalTimeState(TotalTime);
     await device.gatt.disconnect(); //연결해제
