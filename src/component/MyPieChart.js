@@ -28,8 +28,8 @@ function MyPieChart({ Piekey, Pievalue }) {
 
   let key = Piekey;
   let value1 = Pievalue;
-  console.log("PieKey" + key);
-  console.log("PieValue" + value1);
+  console.log("PieKey" + Piekey);
+  console.log("PieValue" + Pievalue);
   // console.log("11", value1.XTimeStorage);
   const data02 = [
     {

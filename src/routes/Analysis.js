@@ -48,21 +48,6 @@ function Analysis() {
     localStorageValue[i] = Array.from(SortedStorage.values())[i];
   }
 
-  Storage = localStorageValue[0];
-  if (Storage != null) {
-    ParsedStorage = JSON.parse(Storage);
-  }
-
-  // for (let i = 0; i < localStorageKey.length; i++) {
-  //   if (!localStorageKey[i].includes(date)) {
-  //     //console.log("날짜 변경 index" + i);
-  //     dateChange.push(i);
-  //   }
-  //   date = localStorageKey[i].substring(0, 8);
-  // }
-
-  //dateChange.forEach((item) => console.log(item));
-
   for (let i = 0; i < localStorageValue.length; i++) {
     localStorageValue[i] = JSON.parse(localStorageValue[i]);
   }
@@ -112,8 +97,8 @@ function Analysis() {
   return (
     <div className="back">
       <h1>현재 상태 측정 </h1>
-      <MyPieChart PieKey={localStorageKey[0]} Pievalue={localStorageValue[0]} />
-      <AnalysisString ParsedStorage={ParsedStorage} />
+      <MyPieChart Piekey={localStorageKey[0]} Pievalue={localStorageValue[0]} />
+      <AnalysisString ParsedStorage={localStorageValue[0]} />
       <p></p>
       <h1>이전 기록 확인</h1>
       <AnalysisHistory

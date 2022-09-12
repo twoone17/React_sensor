@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Analysis from "../routes/Analysis";
 import MyPieChart from "./MyPieChart";
 import AnalysisString from "./AnalysisString";
+let PieArray = [];
 function AnalysisHistory({ localStorageKey, localStorageValue, dateChange }) {
   const [state1, setState1] = useState("start");
   const [VibrateBooleanstate1, setVibrateBooleanState1] = useState(false);
@@ -12,7 +13,6 @@ function AnalysisHistory({ localStorageKey, localStorageValue, dateChange }) {
   const [LiState, setLiState] = useState();
   // const [localStoragekeyState, setlocalStorageKeyState] = useState([]);
   let storageArray = [""];
-  let PieArray = [];
   let ParsedStorage;
   const [storageArraystate, SetstorageArraystate] = useState([""]);
 
@@ -66,7 +66,10 @@ function AnalysisHistory({ localStorageKey, localStorageValue, dateChange }) {
               "Hi"
             )}
             {LiState === i && PieChartBooleanState1 ? (
-              <MyPieChart PieKey={PieArray[0]} PieValue={PieArray[1]} />
+              <MyPieChart
+                PieKey={localStorageKey[0]}
+                PieValue={localStorageValue[0]}
+              />
             ) : (
               "Hi"
             )}
