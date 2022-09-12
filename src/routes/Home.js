@@ -9,6 +9,7 @@ function Home() {
     return (
         <div className="back">
             <Header />
+            <Footer />
             
         </div>    
     

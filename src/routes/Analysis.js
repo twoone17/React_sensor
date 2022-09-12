@@ -1,4 +1,5 @@
 import React from "react";
+import Footer from "../component/Footer";
 import AnalysisString from "../component/AnalysisString";
 import { useState, useEffect } from "react";
 import AnalysisHistory from "../component/AnalysisHistory";
@@ -15,6 +16,7 @@ import {
   Cell,
   LineChart,
 } from "recharts";
+
 function Analysis() {
   let ParsedStorage;
   let localStorageKey = [];
@@ -96,7 +98,7 @@ function Analysis() {
 
   return (
     <div className="back">
-      <h1>현재 상태 측정 </h1>
+      <h5>현재 상태 측정</h5>
       <MyPieChart Piekey={localStorageKey[0]} Pievalue={localStorageValue[0]} />
       <AnalysisString ParsedStorage={localStorageValue[0]} />
       <p></p>
@@ -106,7 +108,8 @@ function Analysis() {
         localStorageValue={localStorageValue}
         dateChange={dateChange}
       />
-      <Linechart />
+      {/* <Linechart /> */}
+      <Footer />
     </div>
   );
 }
