@@ -2,6 +2,7 @@ import React from "react";
 import AnalysisString from "../component/AnalysisString";
 import { useState, useEffect } from "react";
 import AnalysisHistory from "../component/AnalysisHistory";
+import MyPieChart from "../component/MyPieChart";
 import {
   PieChart,
   Line,
@@ -14,13 +15,14 @@ import {
   Cell,
   LineChart,
 } from "recharts";
-
 function Analysis() {
   let ParsedStorage;
   let localStorageKey = [];
   let localStorageValue = [];
   let date;
   let dateChange = [];
+  let key;
+  let value1;
 
   let StorageMap = new Map(); //TODO:
   const [StorageData, setStorageData] = useState([
@@ -41,7 +43,6 @@ function Analysis() {
   }
   const SortedStorage = new Map([...StorageMap].sort().reverse());
 
-  console.log(SortedStorage);
   for (let i = 0; i < localStorage.length; i++) {
     localStorageKey[i] = Array.from(SortedStorage.keys())[i];
     localStorageValue[i] = Array.from(SortedStorage.values())[i];
@@ -65,8 +66,6 @@ function Analysis() {
   for (let i = 0; i < localStorageValue.length; i++) {
     localStorageValue[i] = JSON.parse(localStorageValue[i]);
   }
-
-  const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
   function Linechart() {
     let lvalue = [];
@@ -110,59 +109,10 @@ function Analysis() {
     );
   }
 
-  function Piechart({ Piekey, Pievalue }) {
-    // const key = localStorageKey[0];
-    // const value1 = localStorageValue[0];
-    const key = Piekey;
-    const value1 = Pievalue;
-    console.log("11", value1.XTimeStorage);
-    const data02 = [
-      {
-        name: "X만 안좋았던 시간",
-        value: value1.XTimeStorage,
-      },
-      {
-        name: "Y만 안좋았던 시간",
-        value: value1.YTimeStorage,
-      },
-      {
-        name: "X Y가 모두 안좋았던 시간",
-        value: value1.Duplicated,
-      },
-      {
-        name: "자세가 좋았던 시간",
-        value: parseInt(
-          value1.TotalTimeStorage -
-            (value1.XTimeStorage + value1.YTimeStorage - value1.Duplicated)
-        ),
-      },
-    ];
-
-    return (
-      <PieChart width={730} height={250}>
-        <Pie
-          data={data02}
-          dataKey="value"
-          nameKey="name"
-          cx="50%"
-          cy="50%"
-          label="name"
-          fill="green"
-          {...data02.map((entry, index) => (
-            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-          ))}
-        />
-        <Tooltip />
-        <Legend />
-        <Line type="monotone" dataKey="uv" stroke="#ff7300" />
-      </PieChart>
-    );
-  }
-
   return (
     <div className="back">
       <h1>현재 상태 측정 </h1>
-      <Piechart PieKey={localStorageKey[0]} Pievalue={localStorageValue[0]} />
+      <MyPieChart PieKey={localStorageKey[0]} Pievalue={localStorageValue[0]} />
       <AnalysisString ParsedStorage={ParsedStorage} />
       <p></p>
       <h1>이전 기록 확인</h1>
