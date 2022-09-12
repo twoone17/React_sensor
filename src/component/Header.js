@@ -321,8 +321,12 @@ function Header() {
           <h2 className={styles.xy}>YAngle : {Yangle} </h2>
         </div>     
         <div>
-          <h3 className={styles.s1}>{state1}</h3>
-          <p className={styles.s2}>{state2}</p>
+          {connected ? "" : (
+          <div>
+            <h3 className={styles.s1}>{state1}</h3>
+            <p className={styles.s2}>{state2}</p>
+          </div>
+          ) }          
           {connected ? (
             <p>기기를 연결해서 측정을 시작해보세요 ! </p>
           ) : (
@@ -330,13 +334,15 @@ function Header() {
           )}
           {Disconnected ? "" : <p>종료시간 : {EndTimeState}</p>}
           {Disconnected ? "" : <p>총 경과 시간 : {TotalTimeState}</p>}
-          <h2>
-            자세가 안좋았던 시간 :
-            {StorageData.XTimeStorage +
-              StorageData.YTimeStorage -
-              StorageData.Duplicated}{" "}
-            초
-          </h2>
+          {connected ? "" : (
+            <h2>
+              자세가 안좋았던 시간 :
+              {StorageData.XTimeStorage +
+                StorageData.YTimeStorage -
+                StorageData.Duplicated}{" "}
+              초
+            </h2>
+          ) }          
         </div>
       </div>
     </div>
