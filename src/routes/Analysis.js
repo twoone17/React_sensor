@@ -47,12 +47,10 @@ function Analysis() {
     localStorageValue[i] = Array.from(SortedStorage.values())[i];
   }
 
-
   Storage = localStorageValue[0];
   if (Storage != null) {
     ParsedStorage = JSON.parse(Storage);
   }
-
 
   // for (let i = 0; i < localStorageKey.length; i++) {
   //   if (!localStorageKey[i].includes(date)) {
@@ -70,20 +68,18 @@ function Analysis() {
 
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
-  
-
-  
-
   function Linechart() {
-  let lvalue = [];
+    let lvalue = [];
 
-  for (let i = 0; i < 2; i++) {
-    lvalue[i] =
-      (localStorageValue[i].TotalTimeStorage - (localStorageValue[i].XTimeStorage + localStorageValue[i].YTimeStorage - localStorageValue[i].TotalTimeStorage))
-  }
+    for (let i = 0; i < 2; i++) {
+      lvalue[i] =
+        localStorageValue[i].TotalTimeStorage -
+        (localStorageValue[i].XTimeStorage +
+          localStorageValue[i].YTimeStorage -
+          localStorageValue[i].TotalTimeStorage);
+    }
 
     const data01 = [
-      
       {
         name: localStorageKey[2],
         value: lvalue[2],
@@ -115,8 +111,10 @@ function Analysis() {
   }
 
   function Piechart({ Piekey, Pievalue }) {
-    const key = localStorageKey[0];
-    const value1 = localStorageValue[0];
+    // const key = localStorageKey[0];
+    // const value1 = localStorageValue[0];
+    const key = Piekey;
+    const value1 = Pievalue;
     console.log("11", value1.XTimeStorage);
     const data02 = [
       {
@@ -164,7 +162,7 @@ function Analysis() {
   return (
     <div className="back">
       <h1>현재 상태 측정 </h1>
-      <Piechart />
+      <Piechart PieKey={localStorageKey[0]} Pievalue={localStorageValue[0]} />
       <AnalysisString ParsedStorage={ParsedStorage} />
       <p></p>
       <h1>이전 기록 확인</h1>

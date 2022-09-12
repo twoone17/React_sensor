@@ -5,7 +5,9 @@ import AnalysisString from "./AnalysisString";
 function AnalysisHistory({ localStorageKey, localStorageValue, dateChange }) {
   const [state1, setState1] = useState("start");
   const [VibrateBooleanstate1, setVibrateBooleanState1] = useState(false);
+  const [PieChartBooleanState1, setPieChartBooleanState1] = useState(false);
   const [Vibratestate1, setVibrateState1] = useState([""]);
+  const [PieChartState1, setPieChartState1] = useState([""]);
   const [LiState, setLiState] = useState();
   // const [localStoragekeyState, setlocalStorageKeyState] = useState([]);
   let storageArray = [""];
@@ -13,6 +15,22 @@ function AnalysisHistory({ localStorageKey, localStorageValue, dateChange }) {
   const [storageArraystate, SetstorageArraystate] = useState([""]);
 
   function StorageHistory({ storageArraystate }) {
+    const ShowPieChart = (date, i) => {
+      setPieChartState1((PieChartState1) => []);
+      let indexKey = localStorageKey.indexOf(date);
+      let PieKey = date;
+      let PieValue = localStorageValue[indexKey];
+      setPieChartBooleanState1(true);
+      setPieChartState1((PieChartState1) => [
+        ...PieChartState1,
+        PieKey,
+        PieValue,
+      ]);
+      console.log(PieChartState1);
+      console.log(PieChartState1[0]);
+      console.log(PieChartState1[1]);
+      // setLiState(i);
+    };
     const ShowVibration = (date, i) => {
       setVibrateState1((Vibratestate1) => []);
       let indexKey = localStorageKey.indexOf(date);
@@ -31,13 +49,24 @@ function AnalysisHistory({ localStorageKey, localStorageValue, dateChange }) {
         result.push(
           <li
             key={i}
-            onClick={(e) => ShowVibration(storageArraystate[0][i], i, e)}
+            onClick={(e) => {
+              ShowVibration(storageArraystate[0][i], i, e);
+              ShowPieChart(storageArraystate[0][i], i, e);
+            }}
           >
             {LiState === i && VibrateBooleanstate1 ? (
               <AnalysisString ParsedStorage={Vibratestate1[0]} />
             ) : (
               "Hi"
             )}
+            {/* {LiState === i && PieChartBooleanState1 ? (
+                <PieChart
+                  PieKey={PieChartState1[0]}
+                  PieValue={PieChartState1[1]}
+                />
+              ) : (
+                "Hi"
+              )} */}
             {storageArraystate[0][i]}
           </li>
         );
