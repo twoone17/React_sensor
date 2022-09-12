@@ -66,10 +66,7 @@ function AnalysisHistory({ localStorageKey, localStorageValue, dateChange }) {
               "Hi"
             )}
             {LiState === i && PieChartBooleanState1 ? (
-              <MyPieChart
-                PieKey={localStorageKey[0]}
-                PieValue={localStorageValue[0]}
-              />
+              <MyPieChart Piekey={PieArray[0]} Pievalue={PieArray[1]} />
             ) : (
               "Hi"
             )}
