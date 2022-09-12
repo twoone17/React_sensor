@@ -1,18 +1,46 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { PieChart } from "react-minimal-pie-chart";
+import AnalysisString from "./AnalysisString";
 function AnalysisHistory({ localStorageKey, localStorageValue, dateChange }) {
   const [state1, setState1] = useState("start");
+  const [VibrateBooleanstate1, setVibrateBooleanState1] = useState(false);
+  const [Vibratestate1, setVibrateState1] = useState([""]);
+  const [LiState, setLiState] = useState();
   // const [localStoragekeyState, setlocalStorageKeyState] = useState([]);
   let storageArray = [""];
+  let ParsedStorage;
   const [storageArraystate, SetstorageArraystate] = useState([""]);
 
   function StorageHistory({ storageArraystate }) {
+    const ShowVibration = (date, i) => {
+      setVibrateState1((Vibratestate1) => []);
+      let indexKey = localStorageKey.indexOf(date);
+      let Storage = localStorageValue[indexKey];
+      setVibrateBooleanState1(true);
+      setVibrateState1((Vibratestate1) => [...Vibratestate1, Storage]);
+      console.log(Vibratestate1);
+      setLiState(i);
+      console.log(Vibratestate1[0].XTimeStorage);
+    };
+
     const rendering = () => {
       const result = [];
 
       for (let i = 0; i < storageArraystate[0].length; i++) {
-        result.push(<li key={i}>{storageArraystate[0][i]}</li>);
+        result.push(
+          <li
+            key={i}
+            onClick={(e) => ShowVibration(storageArraystate[0][i], i, e)}
+          >
+            {LiState === i && VibrateBooleanstate1 ? (
+              <AnalysisString ParsedStorage={Vibratestate1[0]} />
+            ) : (
+              "Hi"
+            )}
+            {storageArraystate[0][i]}
+          </li>
+        );
       }
       return result;
     };
