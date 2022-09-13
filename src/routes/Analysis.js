@@ -25,6 +25,12 @@ function Analysis() {
   let dateChange = [];
   let key;
   let value1;
+  const advice = [
+    "바른 자세를 유지하면 신체의 핵심 근육들이 활발히 움직여 기초대사량과 열량 소모를 높입니다 !",
+    "허리는 일자로 펴고 앉으시되 앞으로 나온 턱을 뒤로 밀어 넣고, 어깨를 편 자세를 함께 유지해주세요 ! ",
+    "바른 자세는 업무 능력을 향상시킵니다 ! ",
+    "앉아있을땐 20~30분 간격으로 몸을 틀어주고 스트레칭을 하는게 좋아요 !",
+  ];
 
   let StorageMap = new Map(); //TODO:
   const [StorageData, setStorageData] = useState([
@@ -100,12 +106,13 @@ function Analysis() {
     <div className="back">
       <div className="c">
         <div>
-          <h5>현재 상태 측정</h5>
+          <h5>최근 당신의 자세는?</h5>
           <MyPieChart
             Piekey={localStorageKey[0]}
             Pievalue={localStorageValue[0]}
           />
           <AnalysisString ParsedStorage={localStorageValue[0]} />
+          <h5>{advice[Math.floor(Math.random() * advice.length)]}</h5>
         </div>
         <hr />
         <div>
@@ -113,10 +120,8 @@ function Analysis() {
           <AnalysisHistory
             localStorageKey={localStorageKey}
             localStorageValue={localStorageValue}
-            dateChange={dateChange}
           />
         </div>
-        
       </div>
 
       {/* <Linechart /> */}
