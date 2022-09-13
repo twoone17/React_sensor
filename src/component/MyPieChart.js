@@ -56,7 +56,7 @@ function MyPieChart({ Piekey, Pievalue }) {
  
 
   return (
-    <PieChart width={350} height={200}> 
+    <PieChart width={300} height={200}> 
       <Pie
         data={data02}
         dataKey="value"
@@ -73,7 +73,7 @@ function MyPieChart({ Piekey, Pievalue }) {
         }
       </Pie>
       <Tooltip />
-      <Legend />
+      <Legend layout="vertical" verticalAlign="middle" align="right" wrapperStyle={{fontSize: "12px"}}/>
       <Line type="monotone" dataKey="uv" stroke="#ff7300" />
     </PieChart>
   );

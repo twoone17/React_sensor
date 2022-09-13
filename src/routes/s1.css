@@ -18,5 +18,11 @@
 .c {
     /* flex: 1;
     flex-direction: 'column'; */
-    display : inline-flex
+    /* display : inline-flex */
 }
+
+/* p {
+    border: 2px solid red;
+
+  } */
+  
