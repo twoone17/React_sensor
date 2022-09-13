@@ -62,37 +62,68 @@ function Analysis() {
 
   function Linechart() {
     let lvalue = [];
-
-    for (let i = 0; i < 2; i++) {
+    const data01 = [];
+    for (let i = 0; i < localStorageValue.length; i++) {
       lvalue[i] =
-        localStorageValue[i].TotalTimeStorage -
-        (localStorageValue[i].XTimeStorage +
-          localStorageValue[i].YTimeStorage -
-          localStorageValue[i].TotalTimeStorage);
+        ((localStorageValue[i].TotalTimeStorage -
+          (localStorageValue[i].XTimeStorage +
+            localStorageValue[i].YTimeStorage -
+            localStorageValue[i].Duplicated)) /
+          localStorageValue[i].TotalTimeStorage) *
+        100;
     }
-
-    const data01 = [
-      {
-        name: localStorageKey[2],
-        value: lvalue[2],
-      },
-      {
-        name: localStorageKey[1],
-        value: lvalue[1],
-      },
-      {
-        name: localStorageKey[0],
-        value: lvalue[0],
-      },
-    ];
-
+    let i = localStorageValue.length;
+    let NewCount = 6;
+    while (i >= 0 && NewCount == 0) {
+      i--;
+      NewCount--;
+      data01.push([
+        {
+          name: localStorageKey[i],
+          value: lvalue[i],
+        },
+      ]);
+    }
     console.log(data01);
+
+    // const data01 = [
+    //   {
+    //     name: localStorageKey[6],
+    //     value: lvalue[6],
+    //   },
+    //   {
+    //     name: localStorageKey[5],
+    //     value: lvalue[5],
+    //   },
+    //   {
+    //     name: localStorageKey[4],
+    //     value: lvalue[4],
+    //   },
+    //   {
+    //     name: localStorageKey[3],
+    //     value: lvalue[3],
+    //   },
+    //   {
+    //     name: localStorageKey[2],
+    //     value: lvalue[2],
+    //   },
+    //   {
+    //     name: localStorageKey[1],
+    //     value: lvalue[1],
+    //   },
+    //   {
+    //     name: localStorageKey[0],
+    //     value: lvalue[0],
+    //   },
+    // ];
+    console.log(localStorageValue);
+
     return (
       <LineChart
         width={350}
         height={150}
         data={data01}
-        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+        margin={{ top: 5, right: 30, left: 0, bottom: 0 }}
       >
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" />
@@ -118,7 +149,7 @@ function Analysis() {
         <hr />
         <Linechart />
         <hr />
-        <p>{advice[Math.floor(Math.random() * advice.length)]}</p>
+        <p className="d">{advice[Math.floor(Math.random() * advice.length)]}</p>
         <div>
           <h5>이전 기록 확인</h5>
           <AnalysisHistory
