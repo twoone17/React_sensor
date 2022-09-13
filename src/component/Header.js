@@ -56,8 +56,6 @@ function Header() {
     try {
       //연결되는 장치 조건 필터링, 추후에 해당 기기만 연결되게 변경 예정
       const deviceActivate = await navigator.bluetooth.requestDevice({
-        // acceptAllDevices: true,
-        // optionalServices: ["66df5109-edde-4f8a-a5e1-02e02a69cbd5"], //기기 uuid
         filters: [
           {
             services: ["66df5109-edde-4f8a-a5e1-02e02a69cbd5"],
@@ -85,7 +83,7 @@ function Header() {
         "gattserverdisconnected",
         onDisconnected
       );
-      connect(); //자동 재연결 (작동 잘 안됨)
+      // connect(); //자동 재연결 (작동 잘 안됨)
       const server = await bluetoothDevice.gatt.connect(); //서버에 연결
 
       //Service
@@ -127,7 +125,6 @@ function Header() {
           //연결해제시 interval 종료
           clearInterval(interval);
           disConnection = false;
-          connect(); //재연결 시도(작동잘안함)
         }
         CCount++;
         const Xvalue = characteristic.readValue(); //Xsensor 값 읽기 (이걸 포함해야 characteristicvaluechanged 의 EventListener가 먹힘)
@@ -136,11 +133,11 @@ function Header() {
         //handleXangleChanged , handleYangleChanged에서 받은 Count 수
         if (XCount >= 3 || YCount >= 3) {
           //3초 이상 X와 Y가 정상범위가 아닐때
-          setState1("X or Y의 자세가 불안정해요 !"); //상태
+          setState1("자세가 불안정해요 !"); //상태
           setState2("거북목은 안좋아요 ㅠㅠ"); //조언
         } else {
-          setState1("x or Y의 자세가 정상적입니다"); //상태
-          setState2("x or Y를 이렇게만 유지하세요!"); //조언
+          setState1("자세가 정상적입니다"); //상태
+          setState2("이렇게만 유지하세요!"); //조언
         }
 
         if (Xboolean == true && Yboolean == true) {
@@ -226,24 +223,6 @@ function Header() {
     }
   }
 
-  //재연결 시도 함수
-  async function connect() {
-    exponentialBackoff(
-      3 /* max retries */,
-      2 /* seconds delay */,
-      async function toTry() {
-        time("Connecting to Bluetooth Device... ");
-        await bluetoothDevice.gatt.connect();
-      },
-      function success() {
-        console.log("> Bluetooth Device connected. Try disconnect it now.");
-      },
-      function fail() {
-        time("Failed to reconnect.");
-      }
-    );
-  }
-
   //연결 해제 함수
   async function onDisconnected() {
     disConnection = true;
@@ -258,27 +237,6 @@ function Header() {
     setEndTimeState(ConvertedEndTime);
     setTotalTimeState(TotalTime);
     await device.gatt.disconnect(); //연결해제
-  }
-
-  //재연결 시도 함수를 위한 유틸함수
-  /* Utils */
-
-  // This function keeps calling "toTry" until promise resolves or has
-  // retried "max" number of times. First retry has a delay of "delay" seconds.
-  // "success" is called upon success.
-  async function exponentialBackoff(max, delay, toTry, success, fail) {
-    try {
-      const result = await toTry();
-      success(result);
-    } catch (error) {
-      if (max === 0) {
-        return fail();
-      }
-      time("Retrying in " + delay + "s... (" + max + " tries left)");
-      setTimeout(function () {
-        exponentialBackoff(--max, delay * 2, toTry, success, fail);
-      }, delay * 1000);
-    }
   }
 
   function time(text) {
@@ -343,13 +301,19 @@ function Header() {
         {connected ? (
           ""
         ) : (
-          <h2>
-            자세가 안좋았던 시간 :
-            {StorageData.XTimeStorage +
-              StorageData.YTimeStorage -
-              StorageData.Duplicated}{" "}
-            초
-          </h2>
+          <div>
+            <h2>
+              자세가 안좋았던 시간 :
+              {StorageData.XTimeStorage +
+                StorageData.YTimeStorage -
+                StorageData.Duplicated}{" "}
+              초
+            </h2>
+            <h2>
+              진동 횟수 :{" "}
+              {StorageData.XVibrateStorage + StorageData.YVibrateStorage}
+            </h2>
+          </div>
         )}
       </div>
     </div>
