@@ -107,7 +107,7 @@ function Analysis() {
           />
           <AnalysisString ParsedStorage={localStorageValue[0]} />
         </div>
-        <p></p>
+        <hr />
         <div>
           <h5>이전 기록 확인</h5>
           <AnalysisHistory
