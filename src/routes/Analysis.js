@@ -74,16 +74,17 @@ function Analysis() {
     }
     console.log(lvalue[0]);
     let i = localStorageValue.length;
-    let NewCount = 6;
+    let NewCount = 3;
     while (i >= 0 && NewCount >= 0) {
-      i--;
-      NewCount--;
+ 
       data01.push({
         name: localStorageKey[NewCount],
         value: lvalue[NewCount],
       });
+      i--;
+      NewCount--;
     }
-    console.log(data01);
+    //console.log("      ",data01);
 
     return (
       <LineChart
