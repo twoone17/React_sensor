@@ -56,17 +56,17 @@ function AnalysisHistory({ localStorageKey, localStorageValue, dateChange }) {
               ShowPieChart(storageArraystate[0][i], i, e);
             }}
           >
-            {LiState === i && VibrateBooleanstate1 ? (
-              <AnalysisString ParsedStorage={Vibratestate1[0]} />
-            ) : (
-              "Hi"
-            )}
+            {storageArraystate[0][i]}
             {LiState === i && PieChartBooleanState1 ? (
               <MyPieChart Piekey={PieArray[0]} Pievalue={PieArray[1]} />
             ) : (
-              "Hi"
+              ""
             )}
-            {storageArraystate[0][i]}
+            {LiState === i && VibrateBooleanstate1 ? (
+              <AnalysisString ParsedStorage={Vibratestate1[0]} />
+            ) : (
+              ""
+            )}
           </li>
         );
       }
