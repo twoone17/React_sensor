@@ -68,7 +68,7 @@ function Analysis() {
         (localStorageValue[i].TotalTimeStorage -
         (localStorageValue[i].XTimeStorage +
           localStorageValue[i].YTimeStorage -
-          localStorageValue[i].Duplicated))/localStorageValue[i].TotalTimeStorage;
+          localStorageValue[i].Duplicated))/localStorageValue[i].TotalTimeStorage*100;
     }
 
     const data01 = [      
@@ -135,7 +135,7 @@ function Analysis() {
         <hr />
         <Linechart />
         <hr />
-        <p>{advice[Math.floor(Math.random() * advice.length)]}</p>
+        <p className="d">{advice[Math.floor(Math.random() * advice.length)]}</p>
         <div>
           <h5>이전 기록 확인</h5>
           <AnalysisHistory
