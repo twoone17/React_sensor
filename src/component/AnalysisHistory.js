@@ -30,8 +30,8 @@ function AnalysisHistory({ localStorageKey, localStorageValue, dateChange }) {
         PieValue,
       ]);
       PieArray.push(PieKey, PieValue);
-      console.log("PieKey " + PieArray[0]);
-      console.log("PieValue" + PieArray[1]);
+      // console.log("PieKey " + PieArray[0]);
+      // console.log("PieValue" + PieArray[1]);
       // console.log(PieChartState1);
       // console.log("PieChartState[0]" + PieChartState1[0]);
       // console.log("PieChartState[1]" + PieChartState1[1]);
