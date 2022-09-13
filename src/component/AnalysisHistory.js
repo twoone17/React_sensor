@@ -42,7 +42,6 @@ function AnalysisHistory({ localStorageKey, localStorageValue, dateChange }) {
       setVibrateState1((Vibratestate1) => [...Vibratestate1, Storage]);
       console.log(Vibratestate1);
       setLiState(i);
-      console.log(Vibratestate1[0].XTimeStorage);
     };
 
     const rendering = () => {
