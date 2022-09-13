@@ -73,7 +73,7 @@ function Analysis() {
     }
         let i = localStorageValue.length;
         let NewCount = 6;
-        while(i>=0 && NewCount == 0)
+        while(i>=0 && NewCount >= 0)
         {
           i--;
           NewCount--;
