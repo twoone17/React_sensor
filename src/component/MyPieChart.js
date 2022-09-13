@@ -14,6 +14,8 @@ import {
 } from "recharts";
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042"];
 
+
+
 function MyPieChart({ Piekey, Pievalue }) {
   const [StorageData, setStorageData] = useState([
     {
@@ -30,7 +32,6 @@ function MyPieChart({ Piekey, Pievalue }) {
   let value1 = Pievalue;
   console.log("PieKey" + Piekey);
   console.log("PieValue" + Pievalue);
-  // console.log("11", value1.XTimeStorage);
   const data02 = [
     {
       name: "X만 안좋았던 시간",
@@ -52,9 +53,10 @@ function MyPieChart({ Piekey, Pievalue }) {
       ),
     },
   ];
+ 
 
   return (
-    <PieChart width={730} height={250}>
+    <PieChart width={350} height={200}> 
       <Pie
         data={data02}
         dataKey="value"
@@ -63,10 +65,13 @@ function MyPieChart({ Piekey, Pievalue }) {
         cy="50%"
         label="name"
         fill="green"
-        {...data02.map((entry, index) => (
-          <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-        ))}
-      />
+        >
+        {
+          data02.map((entry, index) => (
+            <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]}/>             
+          ))
+        }
+      </Pie>
       <Tooltip />
       <Legend />
       <Line type="monotone" dataKey="uv" stroke="#ff7300" />

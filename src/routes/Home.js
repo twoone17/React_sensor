@@ -7,8 +7,11 @@ import "./s1.css";
 function Home() {
    
     return (
-        <div className="back">
+        <div className="back" style={{
+            height: "103vh",          
+          }}>
             <Header />
+            <Footer />
             
         </div>    
     

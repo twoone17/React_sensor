@@ -13,7 +13,7 @@ function Navs() {
           <Nav className="me-auto">
             <Nav.Link href={`${process.env.PUBLIC_URL}/`}>Home</Nav.Link>
             <Nav.Link href={`${process.env.PUBLIC_URL}/analysis`}>Analysis</Nav.Link>  
-            <Nav.Link href="/analysis">Setting</Nav.Link>          
+                     
           </Nav>
         </Container>
       </Navbar>
