@@ -9,10 +9,13 @@ function App() {
     <Router>
       <Navs />
       <Routes>
-        <Route path={`${process.env.PUBLIC_URL}/analysis`} element={ <Analysis /> } />
+        <Route
+          path={`${process.env.PUBLIC_URL}/analysis`}
+          element={<Analysis />}
+        />
         <Route path={`${process.env.PUBLIC_URL}/`} element={<Home />} />
-      </Routes>      
-    </Router> 
+      </Routes>
+    </Router>
   );
 }
 

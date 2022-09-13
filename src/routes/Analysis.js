@@ -85,6 +85,8 @@ function Analysis() {
         value: lvalue[0],
       },
     ];
+
+    console.log(data01);
     return (
       <LineChart
         width={350}
@@ -112,7 +114,6 @@ function Analysis() {
             Pievalue={localStorageValue[0]}
           />
           <AnalysisString ParsedStorage={localStorageValue[0]} />
-          
         </div>
         <hr />
         <Linechart />
@@ -127,7 +128,6 @@ function Analysis() {
         </div>
       </div>
 
-      
       {/* <Footer /> */}
     </div>
   );
