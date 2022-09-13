@@ -188,7 +188,6 @@ function Header() {
         if (XCount == 3) {
           Storage.XVibrateStorage++;
         }
-        console.log("3초이상 X value 비정상적 : 진동울림 ");
       }
     } else {
       //정상범위로 돌아오면
