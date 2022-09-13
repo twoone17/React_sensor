@@ -1,48 +1,59 @@
-@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@300&family=Ubuntu&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Nanum+Brush+Script&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Dosis:wght@300&family=Ubuntu&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Nanum+Brush+Script&display=swap");
 
 .row {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  height: 100vh;
 }
 
 .back {
-    background-image: url(../img/backg.jpg);
-    background-repeat: no-repeat;
-    background-position: top center;
-    background-size: cover;
-    background-attachment: fixed;
-  }
+  background-image: url(../img/backg.jpg);
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: cover;
+  background-attachment: fixed;
+}
 
 .xy {
-    font-family: 'Dosis', sans-serif;
-    font-size: 50px;
+  font-family: "Dosis", sans-serif;
+  font-size: 50px;
 }
 
 .device {
-    justify-content: flex-start;
+  justify-content: flex-start;
 }
 
 .container {
-    border: 1px solid; padding: 30px; padding-left: 10px; padding-right: 10px;
+  border: 1px solid;
+  padding: 30px;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 
 .s1 {
-    padding-top: 30px;
-    text-decoration: overline;
+  padding-top: 30px;
+  text-decoration: overline;
 }
 
 .s2 {
-    font-family: 'Nanum Brush Script', cursive;
-    font-size: 30px;
+  font-family: "Nanum Brush Script", cursive;
+  font-size: 30px;
 }
 
 .s3 {
-    font-family: 'Dosis', sans-serif;
-    font-size: 15px;
+  font-family: "Dosis", sans-serif;
+  font-size: 15px;
 }
 
+.defaultHeaderRender {
+  font-family: "Dosis", sans-serif;
+  font-size: 25px;
+}
+.TextBox {
+  text-align: left;
+  line-height: 1.2;
+}

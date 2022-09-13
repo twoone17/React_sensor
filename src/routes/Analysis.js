@@ -69,53 +69,21 @@ function Analysis() {
           (localStorageValue[i].XTimeStorage +
             localStorageValue[i].YTimeStorage -
             localStorageValue[i].Duplicated)) /
-          localStorageValue[i].TotalTimeStorage) * 100;
+          localStorageValue[i].TotalTimeStorage) *
+        100;
     }
-        let i = localStorageValue.length;
-        let NewCount = 6;
-        while(i>=0 && NewCount >= 0)
-        {
-          i--;
-          NewCount--;
-          data01.push([      
-            {
-              name: localStorageKey[i],
-              value: lvalue[i],
-            }]);        
-        }
-        console.log(data01);
-    
-    // const data01 = [      
-    //   {
-    //     name: localStorageKey[6],
-    //     value: lvalue[6],
-    //   },
-    //   {
-    //     name: localStorageKey[5],
-    //     value: lvalue[5],
-    //   },
-    //   {
-    //     name: localStorageKey[4],
-    //     value: lvalue[4],
-    //   },
-    //   {
-    //     name: localStorageKey[3],
-    //     value: lvalue[3],
-    //   },
-    //   {
-    //     name: localStorageKey[2],
-    //     value: lvalue[2],
-    //   },
-    //   {
-    //     name: localStorageKey[1],
-    //     value: lvalue[1],
-    //   },
-    //   {
-    //     name: localStorageKey[0],
-    //     value: lvalue[0],
-    //   },
-    // ];
-    console.log(localStorageValue)
+    console.log(lvalue[0]);
+    let i = localStorageValue.length;
+    let NewCount = 6;
+    while (i >= 0 && NewCount >= 0) {
+      i--;
+      NewCount--;
+      data01.push({
+        name: localStorageKey[NewCount],
+        value: lvalue[NewCount],
+      });
+    }
+    console.log(data01);
 
     return (
       <LineChart
@@ -144,7 +112,6 @@ function Analysis() {
             Pievalue={localStorageValue[0]}
           />
           <AnalysisString ParsedStorage={localStorageValue[0]} />
-          
         </div>
         <hr />
         <Linechart />
@@ -159,7 +126,6 @@ function Analysis() {
         </div>
       </div>
 
-      
       {/* <Footer /> */}
     </div>
   );

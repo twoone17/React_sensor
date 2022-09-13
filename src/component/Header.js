@@ -2,6 +2,7 @@ import { useSearchParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import styles from "./Header.module.css";
 
+
 function Header() {
   const [connected, setConnect] = useState(true); //연결 확인
   const [Disconnected, setDisConnect] = useState(true); //연결 해제 확인
@@ -282,7 +283,7 @@ function Header() {
         <br></br>
         <h2 className={styles.xy}>YAngle : {Yangle} </h2>
       </div>
-      <div>
+      <div className={styles.TextBox}>
         {connected ? (
           ""
         ) : (
@@ -292,27 +293,43 @@ function Header() {
           </div>
         )}
         {connected ? (
-          <p>기기를 연결해서 측정을 시작해보세요 ! </p>
+          <p className={styles.defaultHeaderRender}>
+            기기를 연결해서 측정을 시작해보세요 !{" "}
+          </p>
         ) : (
-          <p>시작시간 : {StartTimeState}</p>
+          <p className={styles.defaultHeaderRender}>
+            시작시간 : {StartTimeState}
+          </p>
         )}
-        {Disconnected ? "" : <p className="">종료시간 : {EndTimeState}</p>}
-        {Disconnected ? "" : <p>총 경과 시간 : {TotalTimeState}</p>}
+        {Disconnected ? (
+          ""
+        ) : (
+          <p className={styles.defaultHeaderRender}>
+            종료시간 : {EndTimeState}
+          </p>
+        )}
+        {Disconnected ? (
+          ""
+        ) : (
+          <p className={styles.defaultHeaderRender}>
+            총 경과 시간 : {TotalTimeState}
+          </p>
+        )}
         {connected ? (
           ""
         ) : (
-          <div>
-            <h2>
+          <div className={styles.defaultHeaderRender}>
+            <p>
               자세가 안좋았던 시간 :
               {StorageData.XTimeStorage +
                 StorageData.YTimeStorage -
                 StorageData.Duplicated}{" "}
               초
-            </h2>
-            <h2>
+            </p>
+            <p>
               진동 횟수 :{" "}
               {StorageData.XVibrateStorage + StorageData.YVibrateStorage}
-            </h2>
+            </p>
           </div>
         )}
       </div>
