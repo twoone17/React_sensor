@@ -113,10 +113,8 @@ function Analysis() {
           <AnalysisHistory
             localStorageKey={localStorageKey}
             localStorageValue={localStorageValue}
-            dateChange={dateChange}
           />
         </div>
-        
       </div>
 
       {/* <Linechart /> */}
