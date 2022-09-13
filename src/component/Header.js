@@ -306,44 +306,46 @@ function Header() {
   }
 
   return (
-    <div>
-      <div className={styles.row}>
-        <button onClick={onClickBluetooth}>Click to connect bluetooth</button>
-        {connected ? (
-          <h4>Device Loading...</h4>
-        ) : (
-          <h4>Device name : {device.name}</h4>
-        )}
+    <div className={styles.row}>
+      <button onClick={onClickBluetooth}>Click to connect bluetooth</button>
+      {connected ? (
+        <h4>Device Loading...</h4>
+      ) : (
+        <h4>Device name : {device.name}</h4>
+      )}
+      <br></br>
+      <div className={styles.container}>
+        <h2 className={styles.xy}>XAngle : {Xangle} </h2>
         <br></br>
-        <div className={styles.container}>
-          <h2 className={styles.xy}>XAngle : {Xangle} </h2>
-          <br></br>
-          <h2 className={styles.xy}>YAngle : {Yangle} </h2>
-        </div>     
-        <div>
-          {connected ? "" : (
+        <h2 className={styles.xy}>YAngle : {Yangle} </h2>
+      </div>
+      <div>
+        {connected ? (
+          ""
+        ) : (
           <div>
             <h3 className={styles.s1}>{state1}</h3>
             <p className={styles.s2}>{state2}</p>
           </div>
-          ) }          
-          {connected ? (
-            <p>기기를 연결해서 측정을 시작해보세요 ! </p>
-          ) : (
-            <p>시작시간 : {StartTimeState}</p>
-          )}
-          {Disconnected ? "" : <p>종료시간 : {EndTimeState}</p>}
-          {Disconnected ? "" : <p>총 경과 시간 : {TotalTimeState}</p>}
-          {connected ? "" : (
-            <h2>
-              자세가 안좋았던 시간 :
-              {StorageData.XTimeStorage +
-                StorageData.YTimeStorage -
-                StorageData.Duplicated}{" "}
-              초
-            </h2>
-          ) }          
-        </div>
+        )}
+        {connected ? (
+          <p>기기를 연결해서 측정을 시작해보세요 ! </p>
+        ) : (
+          <p>시작시간 : {StartTimeState}</p>
+        )}
+        {Disconnected ? "" : <p>종료시간 : {EndTimeState}</p>}
+        {Disconnected ? "" : <p>총 경과 시간 : {TotalTimeState}</p>}
+        {connected ? (
+          ""
+        ) : (
+          <h2>
+            자세가 안좋았던 시간 :
+            {StorageData.XTimeStorage +
+              StorageData.YTimeStorage -
+              StorageData.Duplicated}{" "}
+            초
+          </h2>
+        )}
       </div>
     </div>
   );

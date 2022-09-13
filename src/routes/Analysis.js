@@ -81,8 +81,8 @@ function Analysis() {
     ];
     return (
       <LineChart
-        width={730}
-        height={250}
+        width={500}
+        height={200}
         data={data01}
         margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
       >
@@ -98,18 +98,29 @@ function Analysis() {
 
   return (
     <div className="back">
-      <h5>현재 상태 측정</h5>
-      <MyPieChart Piekey={localStorageKey[0]} Pievalue={localStorageValue[0]} />
-      <AnalysisString ParsedStorage={localStorageValue[0]} />
-      <p></p>
-      <h1>이전 기록 확인</h1>
-      <AnalysisHistory
-        localStorageKey={localStorageKey}
-        localStorageValue={localStorageValue}
-        dateChange={dateChange}
-      />
+      <div className="c">
+        <div>
+          <h5>현재 상태 측정</h5>
+          <MyPieChart
+            Piekey={localStorageKey[0]}
+            Pievalue={localStorageValue[0]}
+          />
+          <AnalysisString ParsedStorage={localStorageValue[0]} />
+        </div>
+        <p></p>
+        <div>
+          <h5>이전 기록 확인</h5>
+          <AnalysisHistory
+            localStorageKey={localStorageKey}
+            localStorageValue={localStorageValue}
+            dateChange={dateChange}
+          />
+        </div>
+        
+      </div>
+
       {/* <Linechart /> */}
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

@@ -10,6 +10,13 @@
     background-position: top center;
     background-size: cover;
     background-attachment: fixed;
-    height: 100vh;
+    height: 130vh;
+    /* min-height: 100%;
+    padding-bottom: (50px); */
   }
 
+.c {
+    /* flex: 1;
+    flex-direction: 'column'; */
+    display : inline-flex
+}
