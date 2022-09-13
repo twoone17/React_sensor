@@ -296,7 +296,7 @@ function Header() {
         ) : (
           <p>시작시간 : {StartTimeState}</p>
         )}
-        {Disconnected ? "" : <p>종료시간 : {EndTimeState}</p>}
+        {Disconnected ? "" : <p className="">종료시간 : {EndTimeState}</p>}
         {Disconnected ? "" : <p>총 경과 시간 : {TotalTimeState}</p>}
         {connected ? (
           ""

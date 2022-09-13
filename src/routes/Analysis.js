@@ -87,8 +87,8 @@ function Analysis() {
     ];
     return (
       <LineChart
-        width={500}
-        height={200}
+        width={350}
+        height={150}
         data={data01}
         margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
       >
@@ -112,9 +112,12 @@ function Analysis() {
             Pievalue={localStorageValue[0]}
           />
           <AnalysisString ParsedStorage={localStorageValue[0]} />
-          <h5>{advice[Math.floor(Math.random() * advice.length)]}</h5>
+          
         </div>
         <hr />
+        <Linechart />
+        <hr />
+        <p>{advice[Math.floor(Math.random() * advice.length)]}</p>
         <div>
           <h5>이전 기록 확인</h5>
           <AnalysisHistory
@@ -124,7 +127,7 @@ function Analysis() {
         </div>
       </div>
 
-      {/* <Linechart /> */}
+      
       {/* <Footer /> */}
     </div>
   );
