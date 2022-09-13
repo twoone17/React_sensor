@@ -106,7 +106,7 @@ function Analysis() {
     <div className="back">
       <div className="c">
         <div>
-          <h5>최근 당신의 자세는?</h5>
+          <h5>최근 당신의 자세는 어땠을까요 ?</h5>
           <MyPieChart
             Piekey={localStorageKey[0]}
             Pievalue={localStorageValue[0]}
