@@ -72,14 +72,15 @@ function Analysis() {
           localStorageValue[i].TotalTimeStorage) *
         100;
     }
+    console.log(lvalue[0]);
     let i = localStorageValue.length;
     let NewCount = 6;
     while (i >= 0 && NewCount >= 0) {
       i--;
       NewCount--;
       data01.push({
-        name: localStorageKey[i],
-        value: lvalue[i],
+        name: localStorageKey[NewCount],
+        value: lvalue[NewCount],
       });
     }
     console.log(data01);
