@@ -63,15 +63,31 @@ function Analysis() {
   function Linechart() {
     let lvalue = [];
 
-    for (let i = 0; i < 2; i++) {
+    for (let i = 0; i < 7; i++) {
       lvalue[i] =
-        localStorageValue[i].TotalTimeStorage -
+        (localStorageValue[i].TotalTimeStorage -
         (localStorageValue[i].XTimeStorage +
           localStorageValue[i].YTimeStorage -
-          localStorageValue[i].TotalTimeStorage);
+          localStorageValue[i].Duplicated))/localStorageValue[i].TotalTimeStorage;
     }
 
-    const data01 = [
+    const data01 = [      
+      {
+        name: localStorageKey[6],
+        value: lvalue[6],
+      },
+      {
+        name: localStorageKey[5],
+        value: lvalue[5],
+      },
+      {
+        name: localStorageKey[4],
+        value: lvalue[4],
+      },
+      {
+        name: localStorageKey[3],
+        value: lvalue[3],
+      },
       {
         name: localStorageKey[2],
         value: lvalue[2],
@@ -85,12 +101,14 @@ function Analysis() {
         value: lvalue[0],
       },
     ];
+    console.log(localStorageValue)
+
     return (
       <LineChart
         width={350}
         height={150}
         data={data01}
-        margin={{ top: 5, right: 30, left: 20, bottom: 5 }}
+        margin={{ top: 5, right: 30, left: 0, bottom: 0 }}
       >
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" />
