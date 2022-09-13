@@ -131,7 +131,7 @@ function Header() {
         const Yvalue = characteristic2.readValue(); //Ysensor 값 읽기
 
         //handleXangleChanged , handleYangleChanged에서 받은 Count 수
-        if (XCount >= 3 || YCount >= 3) {
+        if (XCount >= 7 || YCount >= 7) {
           //3초 이상 X와 Y가 정상범위가 아닐때
           setState1("자세가 불안정해요 !"); //상태
           setState2("거북목은 안좋아요 ㅠㅠ"); //조언
@@ -183,11 +183,12 @@ function Header() {
       Storage.XTimeStorage++;
       Xboolean = true;
 
-      if (XCount >= 3) {
+      if (XCount >= 7) {
         //3초간 정상범위가 아니면 진동울림
-        if (XCount == 3) {
+        if (XCount == 7) {
           Storage.XVibrateStorage++;
         }
+        console.log("7초이상 Y value 비정상적 : 진동울림 ");
       }
     } else {
       //정상범위로 돌아오면
@@ -210,11 +211,11 @@ function Header() {
       YCount++;
       Yboolean = true;
       Storage.YTimeStorage++;
-      if (YCount >= 3) {
-        if (YCount == 3) {
+      if (YCount >= 7) {
+        if (YCount == 7) {
           Storage.YVibrateStorage++;
         }
-        console.log("3초이상 Y value 비정상적 : 진동울림 ");
+        console.log("7초이상 Y value 비정상적 : 진동울림 ");
       }
     } else {
       YCount = 0;
