@@ -32,9 +32,6 @@ function AnalysisHistory({ localStorageKey, localStorageValue, dateChange }) {
       PieArray.push(PieKey, PieValue);
       console.log("PieKey " + PieArray[0]);
       console.log("PieValue" + PieArray[1]);
-      // console.log(PieChartState1);
-      // console.log("PieChartState[0]" + PieChartState1[0]);
-      // console.log("PieChartState[1]" + PieChartState1[1]);
       setLiState(i);
     };
     const ShowVibration = (date, i) => {
@@ -127,9 +124,6 @@ function AnalysisHistory({ localStorageKey, localStorageValue, dateChange }) {
     <div>
       기록 로그
       <ShowDateLog />
-      {/* <h1>{localStorageKey}</h1>
-      <h1>{localStorageValue}</h1>
-      <h1>{dateChange}</h1> */}
     </div>
   );
 }
