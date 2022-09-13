@@ -56,8 +56,13 @@ function Header() {
     try {
       //연결되는 장치 조건 필터링, 추후에 해당 기기만 연결되게 변경 예정
       const deviceActivate = await navigator.bluetooth.requestDevice({
-        acceptAllDevices: true,
-        optionalServices: ["66df5109-edde-4f8a-a5e1-02e02a69cbd5"], //기기 uuid
+        // acceptAllDevices: true,
+        // optionalServices: ["66df5109-edde-4f8a-a5e1-02e02a69cbd5"], //기기 uuid
+        filters: [
+          {
+            services: ["66df5109-edde-4f8a-a5e1-02e02a69cbd5"],
+          },
+        ],
       });
       bluetoothDevice = deviceActivate;
       StartTime = Date.now();
