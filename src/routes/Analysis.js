@@ -65,13 +65,13 @@ function Analysis() {
     const data01 = [];
     for (let i = 0; i < localStorageValue.length; i++) {
       lvalue[i] =
-        (localStorageValue[i].TotalTimeStorage -
-        (localStorageValue[i].XTimeStorage +
-          localStorageValue[i].YTimeStorage -
-          localStorageValue[i].Duplicated))/localStorageValue[i].TotalTimeStorage*100;
-   
-        }
-        let i =localStorageValue.length;
+        ((localStorageValue[i].TotalTimeStorage -
+          (localStorageValue[i].XTimeStorage +
+            localStorageValue[i].YTimeStorage -
+            localStorageValue[i].Duplicated)) /
+          localStorageValue[i].TotalTimeStorage) * 100;
+    }
+        let i = localStorageValue.length;
         let NewCount = 6;
         while(i>=0 && NewCount == 0)
         {
