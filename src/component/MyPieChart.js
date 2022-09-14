@@ -63,7 +63,7 @@ function MyPieChart({ Piekey, Pievalue }) {
         nameKey="name"
         cx="50%"
         cy="50%"
-        label="name"
+        // label="name" //파이에 선표시
         fill="green"
         >
         {

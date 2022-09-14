@@ -6,7 +6,7 @@ import AnalysisString from "./AnalysisString";
 let PieArray = [];
 function AnalysisHistory({ localStorageKey, localStorageValue, dateChange }) {
   const [state1, setState1] = useState(
-    "이전 날짜를 클릭해서 기록을 확인해보세요 ! "
+    "이전 날짜를 클릭해서 기록을 확인해보세요! "
   );
   const [state2, setState2] = useState("");
   const [VibrateBooleanstate1, setVibrateBooleanState1] = useState(false);
@@ -100,7 +100,7 @@ function AnalysisHistory({ localStorageKey, localStorageValue, dateChange }) {
       }
       // console.log("Please" + localStoragekeyState);
       setState1(date);
-      setState2("의 로그 확인");
+      setState2("의 기록");
       SetstorageArraystate((storageArraystate) => [
         ...storageArraystate,
         storageArray,
@@ -125,7 +125,7 @@ function AnalysisHistory({ localStorageKey, localStorageValue, dateChange }) {
 
   return (
     <div>
-      기록 로그
+      <br></br>
       <ShowDateLog />
     </div>
   );

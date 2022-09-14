@@ -1,8 +1,7 @@
 import { useSearchParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import styles from "./Header.module.css";
-import { faCheckSquare, faSpinner } from "@fortawesome/free-solid-svg-icons";
-import { faSquare } from "@fortawesome/free-regular-svg-icons";
+
 
 function Header() {
   const [connected, setConnect] = useState(true); //연결 확인
@@ -294,9 +293,12 @@ function Header() {
           </div>
         )}
         {connected ? (
-          <p className={styles.defaultHeaderRender}>
-            기기를 연결해서 측정을 시작해보세요 !{" "}
-          </p>
+          <div>
+            <br></br>
+            <p className={styles.defaultHeaderRender}>
+              기기를 연결해서 측정을 시작해보세요 !{" "}
+            </p>
+          </div>
         ) : (
           <p className={styles.defaultHeaderRender}>
             시작시간 : {StartTimeState}
