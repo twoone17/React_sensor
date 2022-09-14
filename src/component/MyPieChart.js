@@ -56,14 +56,14 @@ function MyPieChart({ Piekey, Pievalue }) {
  
 
   return (
-    <PieChart width={300} height={200}> 
+    <PieChart width={300} height={200} > 
       <Pie
         data={data02}
         dataKey="value"
         nameKey="name"
         cx="50%"
         cy="50%"
-        label="name"
+        // label="name" //파이에 선표시
         fill="green"
         >
         {

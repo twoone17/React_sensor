@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Lobster&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Cute+Font&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300&display=swap');
 
 .b {
     height: 100%;
@@ -31,5 +32,13 @@
   
 .d {
     font-family: 'Cute Font', cursive;
-    font-size: 30px;
+    font-size: 20px;
+    /* justify-content: center;
+    align-items: center; */
+    text-align: center;
+}
+
+.e {
+    font-family: 'Noto Sans KR', sans-serif;
+
 }
