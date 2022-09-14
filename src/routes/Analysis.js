@@ -73,15 +73,16 @@ function Analysis() {
         100;
     }
     console.log(lvalue[0]);
+
     let i = localStorageValue.length;
     let NewCount = 6;
     while (i >= 0 && NewCount >= 0) {
-      i--;
-      NewCount--;
       data01.push({
         name: localStorageKey[NewCount],
         value: lvalue[NewCount],
       });
+      i--;
+      NewCount--;
     }
     console.log("data01 : " + data01[0].name);
 
@@ -90,43 +91,60 @@ function Analysis() {
         width={350}
         height={150}
         data={data01}
-        margin={{ top: 5, right: 30, left: 0, bottom: 0 }}
+        margin={{ top: 5, right: 40, left: 0, bottom: 0 }}
       >
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="name" />
         <YAxis />
         <Tooltip />
         <Legend />
-        <Line type="monotone" dataKey="value" stroke="#8884d8" />
+        <Line
+          type="monotone"
+          dataKey="value"
+          stroke="#8884d8"
+          name="자세 좋았던 시간 비율"
+        />
       </LineChart>
     );
   }
 
   return (
-    <div className="back">
-      <div className="c">
-        <div>
-          <h5>최근 당신의 자세는 어땠을까요 ?</h5>
-          <MyPieChart
-            Piekey={localStorageKey[0]}
-            Pievalue={localStorageValue[0]}
-          />
-          <AnalysisString ParsedStorage={localStorageValue[0]} />
-        </div>
-        <hr />
-        <Linechart />
-        <hr />
-        <p className="d">{advice[Math.floor(Math.random() * advice.length)]}</p>
-        <div>
-          <h5>이전 기록 확인</h5>
-          <AnalysisHistory
-            localStorageKey={localStorageKey}
-            localStorageValue={localStorageValue}
-          />
-        </div>
-      </div>
+    <div>
+      <div
+        className="back"
+        style={{
+          height: "180vh",
+        }}
+      >
+        <div className="c">
+          <div>
+            <br></br>
+            <br></br>
+            <p></p>
+            <h5 className="e">최근 당신의 자세는 어땠을까요?</h5>
+            <MyPieChart
+              Piekey={localStorageKey[0]}
+              Pievalue={localStorageValue[0]}
+            />
+            <AnalysisString ParsedStorage={localStorageValue[0]} />
+          </div>
 
-      {/* <Footer /> */}
+          <Linechart />
+          <hr />
+          <p className="d">
+            {advice[Math.floor(Math.random() * advice.length)]}
+          </p>
+          <hr />
+          <div>
+            <h5 className="e">이전의 자세 기록을 살펴볼까요?</h5>
+            <AnalysisHistory
+              localStorageKey={localStorageKey}
+              localStorageValue={localStorageValue}
+            />
+          </div>
+        </div>
+        <Footer />
+      </div>
     </div>
   );
 }
