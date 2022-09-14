@@ -106,10 +106,13 @@ function Analysis() {
   return (
     <div>
     <div className="back" style={{
-      height: "160vh",          
+      height: "180vh",          
     }}>
       <div className="c">
         <div>
+          <br></br>
+          <br></br>
+          <p></p> 
           <h5 className="e">최근 당신의 자세는 어땠을까요?</h5>
           <MyPieChart
             Piekey={localStorageKey[0]}
@@ -129,12 +132,11 @@ function Analysis() {
             localStorageValue={localStorageValue}
           />
         </div>
-      </div>      
+      </div>    
+      <Footer />  
       
     </div>
-    <div className="">
-        {/* <Footer /> */}
-    </div>
+    
     </div>
   );
 }

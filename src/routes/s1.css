@@ -15,6 +15,7 @@
     background-size: cover;
     background-attachment: fixed;
     height: 160vh;
+    position: relative;
     /* min-height: 100%;
     padding-bottom: (50px); */
   }
@@ -40,8 +41,4 @@
 
 .e {
     font-family: 'Noto Sans KR', sans-serif;
-}
-
-.f {
-    
 }

@@ -7,7 +7,7 @@ import styles from "./Navs.module.css"
 
 function Navs() {
     return (
-      <Navbar className={styles.sticky} bg="dark" variant="dark">
+      <Navbar fixed="top" bg="dark" variant="dark">
         <Container>
           <Navbar.Brand href={`${process.env.PUBLIC_URL}/`}>SensorApp</Navbar.Brand>
           <Nav className="me-auto">
