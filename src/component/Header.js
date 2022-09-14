@@ -26,6 +26,7 @@ function Header() {
   ]);
   let Xanglevalue = 0;
   let Yanglevalue = 0;
+  let CheckError;
   const Storage = {
     XTimeStorage: 0,
     YTimeStorage: 0,
@@ -103,6 +104,8 @@ function Header() {
       const characteristic2 = await service.getCharacteristic(
         "baad41b2-f12e-4322-9ba6-22cd9ce09832"
       );
+
+      CheckError = characteristic2.uuid;
 
       characteristic.addEventListener(
         //X sensor 변화감지
@@ -273,6 +276,7 @@ function Header() {
   return (
     <div className={styles.row}>
       <button onClick={onClickBluetooth}>Click to connect bluetooth</button>
+      <h1>{CheckError}</h1>
       {connected ? (
         <h4>Device Loading...</h4>
       ) : (

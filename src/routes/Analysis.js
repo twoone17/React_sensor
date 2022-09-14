@@ -83,7 +83,7 @@ function Analysis() {
         value: lvalue[NewCount],
       });
     }
-    console.log(data01);
+    console.log("data01 : " + data01[0].name);
 
     return (
       <LineChart
