@@ -8,7 +8,7 @@ function Home() {
    
     return (
         <div className="back" style={{
-            height: "103vh",          
+            height: "104vh",          
           }}>
             <Header />
             <Footer />

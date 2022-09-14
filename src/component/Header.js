@@ -293,9 +293,12 @@ function Header() {
           </div>
         )}
         {connected ? (
-          <p className={styles.defaultHeaderRender}>
-            기기를 연결해서 측정을 시작해보세요 !{" "}
-          </p>
+          <div>
+            <br></br>
+            <p className={styles.defaultHeaderRender}>
+              기기를 연결해서 측정을 시작해보세요 !{" "}
+            </p>
+          </div>
         ) : (
           <p className={styles.defaultHeaderRender}>
             시작시간 : {StartTimeState}

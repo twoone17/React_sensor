@@ -98,13 +98,16 @@ function Analysis() {
         <YAxis />
         <Tooltip />
         <Legend />
-        <Line type="monotone" dataKey="value" stroke="#8884d8" />
+        <Line type="monotone" dataKey="value" stroke="#8884d8" name="자세 좋았던 시간 비율"/>
       </LineChart>
     );
   }
 
   return (
-    <div className="back">
+    <div>
+    <div className="back" style={{
+      height: "160vh",          
+    }}>
       <div className="c">
         <div>
           <h5 className="e">최근 당신의 자세는 어땠을까요?</h5>
@@ -126,9 +129,12 @@ function Analysis() {
             localStorageValue={localStorageValue}
           />
         </div>
-      </div>
-
-      {/* <Footer /> */}
+      </div>      
+      
+    </div>
+    <div className="">
+        {/* <Footer /> */}
+    </div>
     </div>
   );
 }
