@@ -2,7 +2,6 @@ import { useSearchParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import styles from "./Header.module.css";
 
-
 function Header() {
   const [connected, setConnect] = useState(true); //연결 확인
   const [Disconnected, setDisConnect] = useState(true); //연결 해제 확인
@@ -25,6 +24,7 @@ function Header() {
   ]);
   let Xanglevalue = 0;
   let Yanglevalue = 0;
+  let CheckError;
   const Storage = {
     XTimeStorage: 0,
     YTimeStorage: 0,
@@ -36,7 +36,11 @@ function Header() {
   let Xboolean = false;
   let Yboolean = false;
   let XCount = 0;
+  let X40Count = 0;
   let YCount = 0;
+  let Y40Count = 0;
+  let X40boolean = false;
+  let Y40boolean = false;
   let disConnection = false;
   let ConvertedTotalTime = 0;
   let CCount = 0;
@@ -102,6 +106,7 @@ function Header() {
       const characteristic2 = await service.getCharacteristic(
         "baad41b2-f12e-4322-9ba6-22cd9ce09832"
       );
+      const Xvalue = characteristic.readValue();
 
       characteristic.addEventListener(
         //X sensor 변화감지
@@ -136,6 +141,10 @@ function Header() {
           //3초 이상 X와 Y가 정상범위가 아닐때
           setState1("자세가 불안정해요 !"); //상태
           setState2("거북목은 안좋아요 ㅠㅠ"); //조언
+          if (X40boolean == true || Y40boolean == true) {
+            setState1("자세가 너무 안좋습니다 ! ");
+            setState2("자세가 너무 안좋습니다2 ! ");
+          }
         } else {
           setState1("자세가 정상적입니다"); //상태
           setState2("이렇게만 유지하세요!"); //조언
@@ -169,6 +178,9 @@ function Header() {
   function handleXangleChanged(event) {
     //X 변화 감지
     //16진수 10진수로 변환
+    console.log("EVent");
+    console.log(event);
+    console.log(event.target.value);
     const length = event.target.value.byteLength;
     for (let i = 0; i < length; i++) {
       buffer[i] = event.target.value.getUint8(i).toString(16);
@@ -184,6 +196,11 @@ function Header() {
       Storage.XTimeStorage++;
       Xboolean = true;
 
+      if (Xanglevalue > 40 || Xanglevalue < -40) {
+        X40boolean = true;
+      } else {
+        X40boolean = false;
+      }
       if (XCount >= 7) {
         //3초간 정상범위가 아니면 진동울림
         if (XCount == 7) {
@@ -194,6 +211,7 @@ function Header() {
     } else {
       //정상범위로 돌아오면
       XCount = 0; //초기화
+      X40Count = 0;
       Xboolean = false;
     }
   }
@@ -212,6 +230,11 @@ function Header() {
       YCount++;
       Yboolean = true;
       Storage.YTimeStorage++;
+      if (Yanglevalue > 40 || Yanglevalue < -40) {
+        Y40boolean = true;
+      } else {
+        Y40boolean = false;
+      }
       if (YCount >= 7) {
         if (YCount == 7) {
           Storage.YVibrateStorage++;
@@ -220,6 +243,7 @@ function Header() {
       }
     } else {
       YCount = 0;
+      Y40Count = 0;
       Yboolean = false;
     }
   }

@@ -69,14 +69,14 @@ function Analysis() {
           (localStorageValue[i].XTimeStorage +
             localStorageValue[i].YTimeStorage -
             localStorageValue[i].Duplicated)) /
-          localStorageValue[i].TotalTimeStorage) * 100;        
+          localStorageValue[i].TotalTimeStorage) *
+        100;
     }
     console.log(lvalue[0]);
 
-
     let i = localStorageValue.length;
     let NewCount = 6;
-    while (i >= 0 && NewCount >= 0) { 
+    while (i >= 0 && NewCount >= 0) {
       data01.push({
         name: localStorageKey[NewCount],
         value: lvalue[NewCount],
@@ -84,7 +84,7 @@ function Analysis() {
       i--;
       NewCount--;
     }
-    console.log("      ",data01);
+    console.log("data01 : " + data01[0].name);
 
     return (
       <LineChart
@@ -98,45 +98,53 @@ function Analysis() {
         <YAxis />
         <Tooltip />
         <Legend />
-        <Line type="monotone" dataKey="value" stroke="#8884d8" name="자세 좋았던 시간 비율"/>
+        <Line
+          type="monotone"
+          dataKey="value"
+          stroke="#8884d8"
+          name="자세 좋았던 시간 비율"
+        />
       </LineChart>
     );
   }
 
   return (
     <div>
-    <div className="back" style={{
-      height: "180vh",          
-    }}>
-      <div className="c">
-        <div>
-          <br></br>
-          <br></br>
-          <p></p> 
-          <h5 className="e">최근 당신의 자세는 어땠을까요?</h5>
-          <MyPieChart
-            Piekey={localStorageKey[0]}
-            Pievalue={localStorageValue[0]}
-          />
-          <AnalysisString ParsedStorage={localStorageValue[0]} />
-        </div> 
-        
-        <Linechart />
-        <hr />
-        <p className="d">{advice[Math.floor(Math.random() * advice.length)]}</p>
-        <hr />
-        <div>
-          <h5 className="e">이전의 자세 기록을 살펴볼까요?</h5>
-          <AnalysisHistory
-            localStorageKey={localStorageKey}
-            localStorageValue={localStorageValue}
-          />
+      <div
+        className="back"
+        style={{
+          height: "180vh",
+        }}
+      >
+        <div className="c">
+          <div>
+            <br></br>
+            <br></br>
+            <p></p>
+            <h5 className="e">최근 당신의 자세는 어땠을까요?</h5>
+            <MyPieChart
+              Piekey={localStorageKey[0]}
+              Pievalue={localStorageValue[0]}
+            />
+            <AnalysisString ParsedStorage={localStorageValue[0]} />
+          </div>
+
+          <Linechart />
+          <hr />
+          <p className="d">
+            {advice[Math.floor(Math.random() * advice.length)]}
+          </p>
+          <hr />
+          <div>
+            <h5 className="e">이전의 자세 기록을 살펴볼까요?</h5>
+            <AnalysisHistory
+              localStorageKey={localStorageKey}
+              localStorageValue={localStorageValue}
+            />
+          </div>
         </div>
-      </div>    
-      <Footer />  
-      
-    </div>
-    
+        <Footer />
+      </div>
     </div>
   );
 }
