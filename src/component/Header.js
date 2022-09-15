@@ -140,10 +140,10 @@ function Header() {
         if (XCount >= 7 || YCount >= 7) {
           //3초 이상 X와 Y가 정상범위가 아닐때
           setState1("자세가 불안정해요 !"); //상태
-          setState2("거북목은 안좋아요 ㅠㅠ"); //조언
+          setState2("안좋은 자세는 건강을 해쳐요 !"); //조언
           if (X40boolean == true || Y40boolean == true) {
-            setState1("자세가 너무 안좋습니다 ! ");
-            setState2("자세가 너무 안좋습니다2 ! ");
+            setState1("자세가 너무 안좋습니다 !! ");
+            setState2("지금 당장 허리를 펴주세요 ! ");
           }
         } else {
           setState1("자세가 정상적입니다"); //상태
