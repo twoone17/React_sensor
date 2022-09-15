@@ -310,12 +310,15 @@ function Header() {
       <div className={styles.TextBox}>
         {connected ? (
           ""
-        ) : (
+        ) : Disconnected ? (
           <div>
             <h3 className={styles.s1}>{state1}</h3>
             <p className={styles.s2}>{state2}</p>
           </div>
-        )}
+        ) : (
+          ""
+        )}{" "}
+        {/*연결 되어있는 동안만*/}
         {connected ? (
           <div>
             <br></br>
@@ -324,9 +327,12 @@ function Header() {
             </p>
           </div>
         ) : (
-          <p className={styles.defaultHeaderRender}>
-            시작시간 : {StartTimeState}
-          </p>
+          <div>
+            <br></br>
+            <p className={styles.defaultHeaderRender}>
+              시작시간 : {StartTimeState}
+            </p>
+          </div>
         )}
         {Disconnected ? (
           ""
