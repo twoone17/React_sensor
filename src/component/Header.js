@@ -226,7 +226,7 @@ function Header() {
     Yanglevalue = hex2a(bufferMerge);
 
     setYangle(Yanglevalue);
-    if (Yanglevalue > 15 || Yanglevalue < -15) {
+    if (Yanglevalue > 10 || Yanglevalue < -10) {
       YCount++;
       Yboolean = true;
       Storage.YTimeStorage++;
