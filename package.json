@@ -12,6 +12,7 @@
     "@testing-library/user-event": "^13.5.0",
     "@vliegwerk/arduino-nano-33-ble": "^1.0.1",
     "bootstrap": "^5.2.0",
+    "firebase-tools": "^11.9.0",
     "gh-pages": "^4.0.0",
     "react": "^18.2.0",
     "react-bluetooth": "^0.0.0",
