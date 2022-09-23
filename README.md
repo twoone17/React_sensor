@@ -8,7 +8,7 @@ Pairing
 <br/>
 1)When the position is stable 
 <br/>
-<img src="https://user-images.githubusercontent.com/84762786/191986329-fedaf74f-e94f-4896-bfab-1f540fb21789.png" width="500" height="500"/>
+<img src="https://user-images.githubusercontent.com/84762786/191992865-c832c7a9-2b2e-4b8e-8e9a-9646d2b5d09e.png" width="500" height="500"/>
 <br/>
 <br/>
 2)When the X position is unstable
