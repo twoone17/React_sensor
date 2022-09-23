@@ -1,4 +1,4 @@
-<h1>React)Posture Assistance using Arduino Ble 33 nano Gyroscope sensor</h1> 
+<h2>React)Posture Assistance using Arduino Ble 33 nano</h2> 
 
 <img src="https://user-images.githubusercontent.com/84762786/190887449-7aa3f323-8ffe-4ac7-9472-e84ddfd73484.png" width="500" height="600"/>
 <h2>Home</h2>
