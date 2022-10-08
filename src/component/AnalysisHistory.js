@@ -91,6 +91,7 @@ function AnalysisHistory({ localStorageKey, localStorageValue, dateChange }) {
     DateSet.forEach((element) => Newarray.push(element));
 
     const HandleOnClick = (date, e) => {
+      //
       storageArray = [];
       SetstorageArraystate([]);
       for (let i = 0; i < localStorageKey.length; i++) {
