@@ -55,18 +55,13 @@ function Header() {
   let StartTimeByGetTime = 0;
   let flagCount = 0;
   let flagCheck;
-
+  let value;
   const [startButton, setStartButton] = useState(false);
+  const [flag, setFlag] = useState(true);
 
   function onClickFlag() {
-    flagCount++;
-    if (flagCount % 2) {
-      flagCheck = 0;
-      console.log(flagCheck);
-    } else {
-      flagCheck = 1;
-      console.log(flagCheck);
-    }
+    setFlag(!flag);
+    console.log(flag);
   }
 
   async function onClickBluetooth() {
@@ -119,7 +114,15 @@ function Header() {
         "1a4a954a-494c-11ed-b878-0242ac120002"
       );
 
-      characteristicFlag.writeValue(new Uint8Array([1]));
+      if (flag) {
+        //true면 목
+        value = 1;
+      } else {
+        //false면 허리
+        value = 0;
+      }
+
+      characteristicFlag.writeValue(new Uint8Array([value]));
 
       const Xvalue = characteristic.readValue();
 
@@ -166,12 +169,25 @@ function Header() {
         if (Xboolean == true && Yboolean == true) {
           Storage.Duplicated++;
         }
-        localStorage.setItem(ConvertedStartTime, JSON.stringify(Storage));
-        const SavedStorage = localStorage.getItem(ConvertedStartTime);
-        if (SavedStorage != null) {
-          ParsedStorage = JSON.parse(SavedStorage);
+        if (value == 1) {
+          //목일때
+          localStorage.setItem(ConvertedStartTime, JSON.stringify(Storage));
+          const SavedStorage = localStorage.getItem(ConvertedStartTime);
+          if (SavedStorage != null) {
+            ParsedStorage = JSON.parse(SavedStorage);
+          }
+          setStorageData((prevState) => ParsedStorage);
+        } else {
+          localStorage.setItem(
+            "a" + ConvertedStartTime,
+            JSON.stringify(Storage)
+          );
+          const SavedStorage = localStorage.getItem("a" + ConvertedStartTime);
+          if (SavedStorage != null) {
+            ParsedStorage = JSON.parse(SavedStorage);
+          }
+          setStorageData((prevState) => ParsedStorage);
         }
-        setStorageData((prevState) => ParsedStorage);
       }, 1000);
     } catch (error) {
       console.log("Argh! " + error);
@@ -198,28 +214,57 @@ function Header() {
     const bufferMerge = buffer.join("");
     Xanglevalue = hex2a(bufferMerge);
     setXangle(Xanglevalue); //Xangle useState에 설정
-    if (Xanglevalue > 15 || Xanglevalue < -15) {
-      //정상범위가 아닐때
-      XCount++; //1초마다 interval인 상태, 정상범위가 1초간 아닐때 +1
-      Storage.XTimeStorage++;
-      Xboolean = true;
-      if (Xanglevalue > 40 || Xanglevalue < -40) {
-        X40boolean = true;
-      } else {
-        X40boolean = false;
-      }
-      if (XCount >= 7) {
-        //3초간 정상범위가 아니면 진동울림
-        if (XCount == 7) {
-          Storage.XVibrateStorage++;
+    if (value == 1) {
+      //목일때 측정
+      if (Xanglevalue > 15 || Xanglevalue < -15) {
+        //정상범위가 아닐때
+        XCount++; //1초마다 interval인 상태, 정상범위가 1초간 아닐때 +1
+        Storage.XTimeStorage++;
+        Xboolean = true;
+        if (Xanglevalue > 40 || Xanglevalue < -40) {
+          X40boolean = true;
+        } else {
+          X40boolean = false;
         }
-        console.log("7초이상 Y value 비정상적 : 진동울림 ");
+        if (XCount >= 7) {
+          //3초간 정상범위가 아니면 진동울림
+          if (XCount == 7) {
+            Storage.XVibrateStorage++;
+          }
+          console.log("7초이상 Y value 비정상적 : 진동울림 ");
+        }
+      } else {
+        //정상범위로 돌아오면
+        XCount = 0; //초기화
+        X40Count = 0;
+        Xboolean = false;
       }
-    } else {
-      //정상범위로 돌아오면
-      XCount = 0; //초기화
-      X40Count = 0;
-      Xboolean = false;
+    } //허리일때 측정
+    else {
+      if (Xanglevalue > 20 || Xanglevalue < -20) {
+        //TODO: 허리 X범위
+        //정상범위가 아닐때
+        XCount++; //1초마다 interval인 상태, 정상범위가 1초간 아닐때 +1
+        Storage.XTimeStorage++;
+        Xboolean = true;
+        if (Xanglevalue > 50 || Xanglevalue < -50) {
+          X40boolean = true;
+        } else {
+          X40boolean = false;
+        }
+        if (XCount >= 7) {
+          //3초간 정상범위가 아니면 진동울림
+          if (XCount == 7) {
+            Storage.XVibrateStorage++;
+          }
+          console.log("7초이상 Y value 비정상적 : 진동울림 ");
+        }
+      } else {
+        //정상범위로 돌아오면
+        XCount = 0; //초기화
+        X40Count = 0;
+        Xboolean = false;
+      }
     }
   }
   //위와 같음, Y sensor 변화감지
@@ -231,27 +276,54 @@ function Header() {
     const bufferMerge = buffer.join("");
     Yanglevalue = hex2a(bufferMerge);
     setYangle(Yanglevalue);
-    if (Yanglevalue > 10 || Yanglevalue < -10) {
-      YCount++;
-      Yboolean = true;
-      Storage.YTimeStorage++;
-      if (Yanglevalue > 40 || Yanglevalue < -40) {
-        Y40boolean = true;
-      } else {
-        Y40boolean = false;
-      }
-      if (YCount >= 7) {
-        if (YCount == 7) {
-          Storage.YVibrateStorage++;
+    if (value == 1) {
+      // 목 측정
+      if (Yanglevalue > 10 || Yanglevalue < -10) {
+        YCount++;
+        Yboolean = true;
+        Storage.YTimeStorage++;
+        if (Yanglevalue > 40 || Yanglevalue < -40) {
+          Y40boolean = true;
+        } else {
+          Y40boolean = false;
         }
-        console.log("7초이상 Y value 비정상적 : 진동울림 ");
+        if (YCount >= 7) {
+          if (YCount == 7) {
+            Storage.YVibrateStorage++;
+          }
+          console.log("7초이상 Y value 비정상적 : 진동울림 ");
+        }
+      } else {
+        YCount = 0;
+        Y40Count = 0;
+        Yboolean = false;
       }
-    } else {
-      YCount = 0;
-      Y40Count = 0;
-      Yboolean = false;
+    } //허리 측정
+    else {
+      if (Yanglevalue > 10 || Yanglevalue < -10) {
+        //허리 y값
+        YCount++;
+        Yboolean = true;
+        Storage.YTimeStorage++;
+        if (Yanglevalue > 40 || Yanglevalue < -40) {
+          Y40boolean = true;
+        } else {
+          Y40boolean = false;
+        }
+        if (YCount >= 7) {
+          if (YCount == 7) {
+            Storage.YVibrateStorage++;
+          }
+          console.log("7초이상 Y value 비정상적 : 진동울림 ");
+        }
+      } else {
+        YCount = 0;
+        Y40Count = 0;
+        Yboolean = false;
+      }
     }
   }
+
   //연결 해제 함수
   async function onDisconnected() {
     disConnection = true;
@@ -296,7 +368,10 @@ function Header() {
 
   return (
     <div className={styles.row}>
-      <button onClick={onClickFlag}> 목이나 허리를 측정하세요</button>
+      <button onClick={onClickFlag}>
+        {" "}
+        {flag ? "목의 자세를 측정합니다" : "허리의 자세를 측정합니다"}{" "}
+      </button>
       <button onClick={onClickBluetooth}>Click to connect bluetooth</button>
       {connected ? (
         <h4>Device Loading...</h4>
