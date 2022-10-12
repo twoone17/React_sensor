@@ -1,12 +1,12 @@
 import React from "react";
-import Footer from "../component/Footer";
-import AnalysisString from "../component/AnalysisString";
+import Footer from "./Footer";
+import AnalysisString from "./AnalysisString";
 import { useState, useEffect } from "react";
-import AnalysisHistory from "../component/AnalysisHistory";
-import MyPieChart from "../component/MyPieChart";
-import NeckMode from "../component/NeckMode";
+import AnalysisHistory from "./AnalysisHistory";
+import MyPieChart from "./MyPieChart";
 import BackMode from "../component/BackMode";
-import "./s1.css";
+import Analysis from "../routes/Analysis";
+import "./s2.css";
 
 
 import {
@@ -22,7 +22,7 @@ import {
   LineChart,
 } from "recharts";
 
-function Analysis() {
+function NeckMode() {
   let ParsedStorage;
   let localStorageKey = [];
   let localStorageValue = [];
@@ -114,33 +114,37 @@ function Analysis() {
     );
   }
 
-  function onClickMode() {
-    if(mode==1) {
-      setMode(0)
-    }else{
-      setMode(1);
-    }
-    
-    // if (flagCount % 2) {
-    //   setFlag(true);
-    //   console.log(flag);
-    // } else {
-    //   setFlag(false);
-    //   console.log(flag);
-    // }
+    return (
+      <div>
+        <div className="back" style={{ height: "180vh"}}>
+          <div className="c">
+            <div>            
+              <h5 className="e">최근 당신의 자세는 어땠을까요?</h5>
+              <MyPieChart
+                Piekey={localStorageKey[0]}
+                Pievalue={localStorageValue[0]}
+              />
+              <AnalysisString ParsedStorage={localStorageValue[0]} />
+            </div>
+
+            <Linechart />
+            <hr />
+            <p className="d">
+              {advice[Math.floor(Math.random() * advice.length)]}
+            </p>
+            <hr />
+            <div>
+              <h5 className="e">이전의 자세 기록을 살펴볼까요?</h5>
+              <AnalysisHistory
+                localStorageKey={localStorageKey}
+                localStorageValue={localStorageValue}
+              />
+            </div>
+          </div>
+          <Footer />
+        </div>
+      </div>
+    );
   }
 
-  return (
-    <div>
-      <div className="back" style={{ height: "180vh"}}>
-        <br></br>
-        <br></br>
-        <br></br>
-        <button onClick={onClickMode}> 모드 바꾸기 {mode}</button>
-        {mode ? <NeckMode/> : <BackMode />}
-      </div>
-    </div>
-  );
-}
-
-export default Analysis;
+  export default NeckMode;
