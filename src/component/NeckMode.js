@@ -4,7 +4,6 @@ import AnalysisString from "./AnalysisString";
 import { useState, useEffect } from "react";
 import AnalysisHistory from "./AnalysisHistory";
 import MyPieChart from "./MyPieChart";
-import BackMode from "../component/BackMode";
 import Analysis from "../routes/Analysis";
 import "./s2.css";
 
@@ -38,7 +37,6 @@ function NeckMode() {
   ];
 
   let StorageMap = new Map(); //TODO:
-  const [mode, setMode] = useState(0) //neck, back 바꾸는 버튼에 쓰임, 0이면 디폴트 넥
   const [StorageData, setStorageData] = useState([
     {
       XTimeStorage: 0,
@@ -83,7 +81,7 @@ function NeckMode() {
     let i = localStorageValue.length;
     let NewCount = 6;
     while (i >= 0 && NewCount >= 0) {
-      data01.push({
+      data01.push({ //여기 바꾸기
         name: localStorageKey[NewCount],
         value: lvalue[NewCount],
       });
@@ -119,12 +117,12 @@ function NeckMode() {
         <div className="back" style={{ height: "180vh"}}>
           <div className="c">
             <div>            
-              <h5 className="e">최근 당신의 자세는 어땠을까요?</h5>
+              <h5 className="e">최근 당신의 자세는 어땠을까요?</h5>              
               <MyPieChart
                 Piekey={localStorageKey[0]}
                 Pievalue={localStorageValue[0]}
-              />
-              <AnalysisString ParsedStorage={localStorageValue[0]} />
+              /> 
+              <AnalysisString ParsedStorage={localStorageValue[0]} /> 
             </div>
 
             <Linechart />
