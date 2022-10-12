@@ -57,7 +57,7 @@ function BackMode() {
         }                    
     }
     const SortedStorage = new Map([...StorageMap].sort().reverse()); //정렬
-    console.log(SortedStorage)
+    // console.log(SortedStorage)
     const size = StorageMap.size; //총 길이
     
 
@@ -65,6 +65,8 @@ function BackMode() {
         localStorageKey[i] = Array.from(SortedStorage.keys())[i];
         localStorageValue[i] = Array.from(SortedStorage.values())[i];
     } //localstorage에 넣음
+    console.log(localStorageKey)
+
 
     for (let i = 0; i < size; i++) {
         localStorageValue[i] = JSON.parse(localStorageValue[i]);
@@ -94,7 +96,7 @@ function BackMode() {
         i--;
         NewCount--;
         }
-        console.log("data01 : " + data01);
+        console.log("data01 : " + data01[0].name);
 
         return (
         <LineChart
