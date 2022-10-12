@@ -53,8 +53,21 @@ function Header() {
   let bluetoothDevice;
   let EndTimeByGetTime = 0;
   let StartTimeByGetTime = 0;
+  let flagCount = 0;
+  let flagCheck;
 
   const [startButton, setStartButton] = useState(false);
+
+  function onClickFlag() {
+    flagCount++;
+    if (flagCount % 2) {
+      flagCheck = 0;
+      console.log(flagCheck);
+    } else {
+      flagCheck = 1;
+      console.log(flagCheck);
+    }
+  }
 
   async function onClickBluetooth() {
     //bluetooth 연결시 버튼
@@ -100,6 +113,10 @@ function Header() {
       //Y sensor characteristic
       const characteristic2 = await service.getCharacteristic(
         "baad41b2-f12e-4322-9ba6-22cd9ce09832"
+      );
+
+      const characteristicFlag = await service.getCharacteristic(
+        "1a4a954a-494c-11ed-b878-0242ac120002"
       );
 
       const Xvalue = characteristic.readValue();
@@ -277,6 +294,7 @@ function Header() {
 
   return (
     <div className={styles.row}>
+      <button onClick={onClickFlag}> 목이나 허리를 측정하세요</button>
       <button onClick={onClickBluetooth}>Click to connect bluetooth</button>
       {connected ? (
         <h4>Device Loading...</h4>
