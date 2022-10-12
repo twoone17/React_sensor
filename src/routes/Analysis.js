@@ -136,7 +136,7 @@ function Analysis() {
         <br></br>
         <br></br>
         <br></br>
-        <button onClick={onClickMode}> 모드 바꾸기 {mode}</button>
+        <button onClick={onClickMode}> 모드 바꾸기 {mode ? "neck" : "back"}</button>
         {mode ? <NeckMode/> : <BackMode />}
       </div>
     </div>

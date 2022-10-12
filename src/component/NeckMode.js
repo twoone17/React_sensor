@@ -48,7 +48,7 @@ function NeckMode() {
     },
   ]);
 
-  for (let i = 0; i < localStorage.length; i++) { //a 아닐때만 받기, 렝스 조정
+  for (let i = 0; i < localStorage.length; i++) {
     if(localStorage.key(i)[0]!='a'){
         const key = localStorage.key(i);
         const value = localStorage.getItem(key);
@@ -56,7 +56,7 @@ function NeckMode() {
     }
   }
   const SortedStorage = new Map([...StorageMap].sort().reverse()); 
-  console.log(SortedStorage)
+//   console.log(SortedStorage)
   const size = StorageMap.size; //총 길이
 
   for (let i = 0; i < size; i++) {
@@ -94,7 +94,7 @@ function NeckMode() {
       i--;
       NewCount--;
     }
-    console.log("data01 : " + data01[0].name);
+    console.log("data01 : " + data01[0].name); //7개 다 안차면 안그려지는듯..?
 
     return (
       <LineChart
