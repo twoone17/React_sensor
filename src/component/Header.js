@@ -119,6 +119,8 @@ function Header() {
         "1a4a954a-494c-11ed-b878-0242ac120002"
       );
 
+      characteristicFlag.writeValue(new Uint8Array([1]));
+
       const Xvalue = characteristic.readValue();
 
       characteristic.addEventListener(

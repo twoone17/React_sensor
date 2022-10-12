@@ -154,6 +154,7 @@ function Header() {
         CCount++;
         const Xvalue = characteristic.readValue(); //Xsensor 값 읽기 (이걸 포함해야 characteristicvaluechanged 의 EventListener가 먹힘)
         const Yvalue = characteristic2.readValue(); //Ysensor 값 읽기
+
         // if (flagCheck == 0) {
         //   console.log("flag = 0");
         //   characteristicFlag.writeValue(
