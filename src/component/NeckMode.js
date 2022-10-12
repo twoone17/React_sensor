@@ -48,17 +48,23 @@ function NeckMode() {
     },
   ]);
 
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i);
-    const value = localStorage.getItem(key);
-    StorageMap.set(localStorage.key(i), localStorage.getItem(key));
+  for (let i = 0; i < localStorage.length; i++) { //a 아닐때만 받기, 렝스 조정
+    if(localStorage.key(i)[0]!='a'){
+        const key = localStorage.key(i);
+        const value = localStorage.getItem(key);
+        StorageMap.set(localStorage.key(i), localStorage.getItem(key));
+    }
   }
-  const SortedStorage = new Map([...StorageMap].sort().reverse());
+  const SortedStorage = new Map([...StorageMap].sort().reverse()); 
+  console.log(SortedStorage)
+  const size = StorageMap.size; //총 길이
 
-  for (let i = 0; i < localStorage.length; i++) {
+  for (let i = 0; i < size; i++) {
     localStorageKey[i] = Array.from(SortedStorage.keys())[i];
     localStorageValue[i] = Array.from(SortedStorage.values())[i];
   }
+  console.log(localStorageKey)
+
 
   for (let i = 0; i < localStorageValue.length; i++) {
     localStorageValue[i] = JSON.parse(localStorageValue[i]);
