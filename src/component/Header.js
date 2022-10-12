@@ -161,7 +161,7 @@ function Header() {
           if (X40boolean == true || Y40boolean == true) {
             setState1("자세가 너무 안좋습니다 !! ");
             setState2("지금 당장 허리를 펴주세요 ! ");
-          }
+          } //
         } else {
           setState1("자세가 정상적입니다"); //상태
           setState2("이렇게만 유지하세요!"); //조언
