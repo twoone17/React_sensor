@@ -38,7 +38,7 @@ function Analysis() {
   ];
 
   let StorageMap = new Map(); //TODO:
-  const [mode, setMode] = useState(0) //neck, back 바꾸는 버튼에 쓰임, 0이면 디폴트 넥
+  const [mode, setMode] = useState(1) //neck, back 바꾸는 버튼에 쓰임, 0이면 디폴트 넥
   const [StorageData, setStorageData] = useState([
     {
       XTimeStorage: 0,
@@ -50,69 +50,69 @@ function Analysis() {
     },
   ]);
 
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i);
-    const value = localStorage.getItem(key);
-    StorageMap.set(localStorage.key(i), localStorage.getItem(key));
-  }
-  const SortedStorage = new Map([...StorageMap].sort().reverse());
+  // for (let i = 0; i < localStorage.length; i++) {
+  //   const key = localStorage.key(i);
+  //   const value = localStorage.getItem(key);
+  //   StorageMap.set(localStorage.key(i), localStorage.getItem(key));
+  // }
+  // const SortedStorage = new Map([...StorageMap].sort().reverse());
 
-  for (let i = 0; i < localStorage.length; i++) {
-    localStorageKey[i] = Array.from(SortedStorage.keys())[i];
-    localStorageValue[i] = Array.from(SortedStorage.values())[i];
-  }
+  // for (let i = 0; i < localStorage.length; i++) {
+  //   localStorageKey[i] = Array.from(SortedStorage.keys())[i];
+  //   localStorageValue[i] = Array.from(SortedStorage.values())[i];
+  // }
 
-  for (let i = 0; i < localStorageValue.length; i++) {
-    localStorageValue[i] = JSON.parse(localStorageValue[i]);
-  }
+  // for (let i = 0; i < localStorageValue.length; i++) {
+  //   localStorageValue[i] = JSON.parse(localStorageValue[i]);
+  // }
 
-  function Linechart() {
-    let lvalue = [];
-    const data01 = [];
-    for (let i = 0; i < localStorageValue.length; i++) {
-      lvalue[i] =
-        ((localStorageValue[i].TotalTimeStorage -
-          (localStorageValue[i].XTimeStorage +
-            localStorageValue[i].YTimeStorage -
-            localStorageValue[i].Duplicated)) /
-          localStorageValue[i].TotalTimeStorage) *
-        100;
-    }
-    console.log(lvalue[0]);
+  // function Linechart() {
+  //   let lvalue = [];
+  //   const data01 = [];
+  //   for (let i = 0; i < localStorageValue.length; i++) {
+  //     lvalue[i] =
+  //       ((localStorageValue[i].TotalTimeStorage -
+  //         (localStorageValue[i].XTimeStorage +
+  //           localStorageValue[i].YTimeStorage -
+  //           localStorageValue[i].Duplicated)) /
+  //         localStorageValue[i].TotalTimeStorage) *
+  //       100;
+  //   }
+  //   console.log(lvalue[0]);
 
-    let i = localStorageValue.length;
-    let NewCount = 6;
-    while (i >= 0 && NewCount >= 0) {
-      data01.push({
-        name: localStorageKey[NewCount],
-        value: lvalue[NewCount],
-      });
-      i--;
-      NewCount--;
-    }
-    console.log("data01 : " + data01[0].name);
+  //   let i = localStorageValue.length;
+  //   let NewCount = 6;
+  //   while (i >= 0 && NewCount >= 0) {
+  //     data01.push({
+  //       name: localStorageKey[NewCount],
+  //       value: lvalue[NewCount],
+  //     });
+  //     i--;
+  //     NewCount--;
+  //   }
+  //   console.log("data01 : " + data01[0].name);
 
-    return (
-      <LineChart
-        width={350}
-        height={150}
-        data={data01}
-        margin={{ top: 5, right: 40, left: 0, bottom: 0 }}
-      >
-        <CartesianGrid strokeDasharray="3 3" />
-        <XAxis dataKey="name" />
-        <YAxis />
-        <Tooltip />
-        <Legend />
-        <Line
-          type="monotone"
-          dataKey="value"
-          stroke="#8884d8"
-          name="자세 좋았던 시간 비율"
-        />
-      </LineChart>
-    );
-  }
+  //   return (
+  //     <LineChart
+  //       width={350}
+  //       height={150}
+  //       data={data01}
+  //       margin={{ top: 5, right: 40, left: 0, bottom: 0 }}
+  //     >
+  //       <CartesianGrid strokeDasharray="3 3" />
+  //       <XAxis dataKey="name" />
+  //       <YAxis />
+  //       <Tooltip />
+  //       <Legend />
+  //       <Line
+  //         type="monotone"
+  //         dataKey="value"
+  //         stroke="#8884d8"
+  //         name="자세 좋았던 시간 비율"
+  //       />
+  //     </LineChart>
+  //   );
+  // }
 
   function onClickMode() {
     if(mode==1) {

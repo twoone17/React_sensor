@@ -4,7 +4,6 @@ import AnalysisString from "./AnalysisString";
 import { useState, useEffect } from "react";
 import AnalysisHistory from "./AnalysisHistory";
 import MyPieChart from "./MyPieChart";
-import BackMode from "../component/BackMode";
 import Analysis from "../routes/Analysis";
 import "./s2.css";
 
@@ -38,7 +37,6 @@ function NeckMode() {
   ];
 
   let StorageMap = new Map(); //TODO:
-  const [mode, setMode] = useState(0) //neck, back 바꾸는 버튼에 쓰임, 0이면 디폴트 넥
   const [StorageData, setStorageData] = useState([
     {
       XTimeStorage: 0,
@@ -50,17 +48,23 @@ function NeckMode() {
     },
   ]);
 
-  for (let i = 0; i < localStorage.length; i++) {
-    const key = localStorage.key(i);
-    const value = localStorage.getItem(key);
-    StorageMap.set(localStorage.key(i), localStorage.getItem(key));
+  for (let i = 0; i < localStorage.length; i++) { //a 아닐때만 받기, 렝스 조정
+    if(localStorage.key(i)[0]!='a'){
+        const key = localStorage.key(i);
+        const value = localStorage.getItem(key);
+        StorageMap.set(localStorage.key(i), localStorage.getItem(key));
+    }
   }
-  const SortedStorage = new Map([...StorageMap].sort().reverse());
+  const SortedStorage = new Map([...StorageMap].sort().reverse()); 
+  console.log(SortedStorage)
+  const size = StorageMap.size; //총 길이
 
-  for (let i = 0; i < localStorage.length; i++) {
+  for (let i = 0; i < size; i++) {
     localStorageKey[i] = Array.from(SortedStorage.keys())[i];
     localStorageValue[i] = Array.from(SortedStorage.values())[i];
   }
+  console.log(localStorageKey)
+
 
   for (let i = 0; i < localStorageValue.length; i++) {
     localStorageValue[i] = JSON.parse(localStorageValue[i]);
@@ -83,7 +87,7 @@ function NeckMode() {
     let i = localStorageValue.length;
     let NewCount = 6;
     while (i >= 0 && NewCount >= 0) {
-      data01.push({
+      data01.push({ //여기 바꾸기
         name: localStorageKey[NewCount],
         value: lvalue[NewCount],
       });
@@ -119,12 +123,12 @@ function NeckMode() {
         <div className="back" style={{ height: "180vh"}}>
           <div className="c">
             <div>            
-              <h5 className="e">최근 당신의 자세는 어땠을까요?</h5>
+              <h5 className="e">최근 당신의 자세는 어땠을까요?</h5>              
               <MyPieChart
                 Piekey={localStorageKey[0]}
                 Pievalue={localStorageValue[0]}
-              />
-              <AnalysisString ParsedStorage={localStorageValue[0]} />
+              /> 
+              <AnalysisString ParsedStorage={localStorageValue[0]} /> 
             </div>
 
             <Linechart />
