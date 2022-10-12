@@ -54,8 +54,20 @@ function Header() {
   let bluetoothDevice;
   let EndTimeByGetTime = 0;
   let StartTimeByGetTime = 0;
-
+  let flagCount = 0;
   const [startButton, setStartButton] = useState(false);
+  const [flag, setFlag] = useState(false);
+
+  function onClickFlag() {
+    flagCount++;
+    if (flagCount % 2) {
+      setFlag(true);
+      console.log(flag);
+    } else {
+      setFlag(false);
+      console.log(flag);
+    }
+  }
   async function onClickBluetooth() {
     //bluetooth 연결시 버튼
     try {
@@ -106,7 +118,12 @@ function Header() {
       const characteristic2 = await service.getCharacteristic(
         "baad41b2-f12e-4322-9ba6-22cd9ce09832"
       );
+
+      const characteristicFlag = await service.getCharacteristic(
+        "1a4a954a-494c-11ed-b878-0242ac120002"
+      );
       const Xvalue = characteristic.readValue();
+      const Yvalue = characteristic2.readValue();
 
       characteristic.addEventListener(
         //X sensor 변화감지
@@ -119,6 +136,7 @@ function Header() {
         "characteristicvaluechanged",
         handleYangleChanged
       );
+
       const interval = setInterval(() => {
         //1초마다 interval
         bluetoothDevice.addEventListener(
@@ -135,6 +153,7 @@ function Header() {
         CCount++;
         const Xvalue = characteristic.readValue(); //Xsensor 값 읽기 (이걸 포함해야 characteristicvaluechanged 의 EventListener가 먹힘)
         const Yvalue = characteristic2.readValue(); //Ysensor 값 읽기
+        characteristic.writeValue(new Uint8Array([4, 3, 2, 1]));
 
         //handleXangleChanged , handleYangleChanged에서 받은 Count 수
         if (XCount >= 7 || YCount >= 7) {
@@ -295,6 +314,7 @@ function Header() {
 
   return (
     <div className={styles.row}>
+      <button onClick={onClickFlag}>목 {flag}</button>
       <button onClick={onClickBluetooth}>Click to connect bluetooth</button>
       {connected ? (
         <h4>Device Loading...</h4>
