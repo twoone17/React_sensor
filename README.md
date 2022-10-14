@@ -5,7 +5,7 @@
 This react web is connected with arduino 33 ble using bluetooth <br/>
 Go through this link and see how it works <br/>
 
-https://github.com/twoone17/Arduino-Sensor/tree/main/sketch_aug29a/sketch_aug29a
+https://github.com/twoone17/Arduino-Sensor/blob/main/sketch_aug29a/sketch_aug29a/sketch_aug29a.ino
 
 <h2>Home</h2>
 Pairing
