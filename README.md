@@ -1,6 +1,12 @@
 <h2>React)Posture Assistance using Arduino Ble 33 nano</h2> 
 
 <img src="https://user-images.githubusercontent.com/84762786/190887449-7aa3f323-8ffe-4ac7-9472-e84ddfd73484.png" width="500" height="600"/>
+<br/>
+This react web is connected with arduino 33 ble <br/>
+Check through this link see how it works <br/>
+
+https://github.com/twoone17/Arduino-Sensor/tree/main/sketch_aug29a/sketch_aug29a
+
 <h2>Home</h2>
 Pairing
 <br/>
