@@ -84,7 +84,7 @@ function NeckMode() {
     } //lvalue는 좋았던 시간의 비율, 0은 최근꺼
 
     let i = localStorageValue.length; //8
-    let NewCount = 2;
+    let NewCount = 7;
     if (i >= NewCount) {
       while (NewCount > 0) {
         data01.push({

@@ -56,7 +56,7 @@ function MyPieChart({ Piekey, Pievalue }) {
  
 
   return (
-    <PieChart width={300} height={200}> 
+    <PieChart width={300} height={150}> 
       <Pie
         data={data02}
         dataKey="value"

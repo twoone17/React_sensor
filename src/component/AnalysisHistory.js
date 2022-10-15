@@ -83,7 +83,7 @@ function AnalysisHistory({ localStorageKey, localStorageValue, dateChange }) {
     let NewDate = localStorageKey[0].substring(0, 8);
     let DateSet = new Set();
     const Newarray = [];
-    // console.log(NewDate);
+    console.log("!!" + NewDate);
     for (let i = 0; i < localStorageKey.length; i++) {
       DateSet.add(NewDate);
       NewDate = localStorageKey[i].substring(0, 8);
@@ -91,7 +91,6 @@ function AnalysisHistory({ localStorageKey, localStorageValue, dateChange }) {
     DateSet.forEach((element) => Newarray.push(element));
 
     const HandleOnClick = (date, e) => {
-      //
       storageArray = [];
       SetstorageArraystate([]);
       for (let i = 0; i < localStorageKey.length; i++) {
