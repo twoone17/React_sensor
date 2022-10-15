@@ -103,9 +103,6 @@ function NeckMode() {
       }
     }
 
-    // console.log("data01 : " + data01[0].name); //7개 다 안차면 안그려지는듯..?
-    // console.log("data01 : " + data01[6].name); //7개 다 안차면 안그려지는듯..?
-
     return (
       <LineChart
         width={350}

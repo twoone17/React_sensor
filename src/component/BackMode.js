@@ -22,6 +22,7 @@ import {
 
 
 function BackMode() {
+    let zeroflag = 0;
     let ParsedStorage;
     let localStorageKey = [];
     let localStorageValue = [];
@@ -59,6 +60,7 @@ function BackMode() {
     const SortedStorage = new Map([...StorageMap].sort().reverse()); //정렬
     // console.log(SortedStorage)
     const size = StorageMap.size; //총 길이
+    if(size==0){zeroflag=1;}
     
 
     for (let i = 0; i < size; i++) {
@@ -132,6 +134,7 @@ function BackMode() {
         <div>
         <div className="back" style={{ height: "180vh"}}>
           <div className="c">
+            {/* {zeroflag ? <div id="nulldata" onClick={() => alert('a')}>b</div> : ""} */}
             <div>            
               <h5 className="e">최근 당신의 자세는 어땠을까요?</h5>              
               <MyPieChart

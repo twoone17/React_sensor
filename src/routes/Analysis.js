@@ -69,7 +69,7 @@ function Analysis() {
         <br></br>
         <button className="btn-3" onClick={onClickMode}>
           {" "}
-          {mode ? "목의 통계를 확인합니다" : "허리의 통계를 확인합니다"}
+          {mode ? "허리의 통계로 전환" : "목의 통계로 전환"}
         </button>
         {mode ? <NeckMode /> : <BackMode />}
       </div>
