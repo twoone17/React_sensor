@@ -7,7 +7,7 @@ import MyPieChart from "../component/MyPieChart";
 import NeckMode from "../component/NeckMode";
 import BackMode from "../component/BackMode";
 import "./s1.css";
-
+import "../component/Analyz.css";
 
 import {
   PieChart,
@@ -38,7 +38,7 @@ function Analysis() {
   ];
 
   let StorageMap = new Map(); //TODO:
-  const [mode, setMode] = useState(1) //neck, back 바꾸는 버튼에 쓰임, 0이면 디폴트 넥
+  const [mode, setMode] = useState(1); //neck, back 바꾸는 버튼에 쓰임, 0이면 디폴트 넥
   const [StorageData, setStorageData] = useState([
     {
       XTimeStorage: 0,
@@ -115,12 +115,12 @@ function Analysis() {
   // }
 
   function onClickMode() {
-    if(mode==1) {
-      setMode(0)
-    }else{
+    if (mode == 1) {
+      setMode(0);
+    } else {
       setMode(1);
     }
-    
+
     // if (flagCount % 2) {
     //   setFlag(true);
     //   console.log(flag);
@@ -132,12 +132,15 @@ function Analysis() {
 
   return (
     <div>
-      <div className="back" style={{ height: "180vh"}}>
+      <div className="back" style={{ height: "180vh" }}>
         <br></br>
         <br></br>
         <br></br>
-        <button onClick={onClickMode}> 모드 바꾸기 {mode ? "neck" : "back"}</button>
-        {mode ? <NeckMode/> : <BackMode />}
+        <button className="btn-3" onClick={onClickMode}>
+          {" "}
+          모드 바꾸기 {mode ? "neck" : "back"}
+        </button>
+        {mode ? <NeckMode /> : <BackMode />}
       </div>
     </div>
   );
