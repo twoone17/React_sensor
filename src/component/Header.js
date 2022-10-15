@@ -242,13 +242,13 @@ function Header() {
       }
     } //허리일때 측정
     else {
-      if (Xanglevalue > 20 || Xanglevalue < -20) {
+      if (Xanglevalue < -15) {
         //TODO: 허리 X범위
         //정상범위가 아닐때
         XCount++; //1초마다 interval인 상태, 정상범위가 1초간 아닐때 +1
         Storage.XTimeStorage++;
         Xboolean = true;
-        if (Xanglevalue > 50 || Xanglevalue < -50) {
+        if (Xanglevalue < -40) {
           X40boolean = true;
         } else {
           X40boolean = false;
@@ -301,12 +301,12 @@ function Header() {
       }
     } //허리 측정
     else {
-      if (Yanglevalue > 10 || Yanglevalue < -10) {
+      if (Yanglevalue > 15 || Yanglevalue < -15) {
         //허리 y값
         YCount++;
         Yboolean = true;
         Storage.YTimeStorage++;
-        if (Yanglevalue > 40 || Yanglevalue < -40) {
+        if (Yanglevalue > 30 || Yanglevalue < -30) {
           Y40boolean = true;
         } else {
           Y40boolean = false;
@@ -369,7 +369,6 @@ function Header() {
 
   return (
     <div className={styles.row}>
-      <SwitchToggle className="react-switch" />
       <button onClick={onClickFlag}>
         {" "}
         {flag ? "목의 자세를 측정합니다" : "허리의 자세를 측정합니다"}{" "}
