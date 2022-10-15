@@ -81,20 +81,30 @@ function NeckMode() {
             localStorageValue[i].Duplicated)) /
           localStorageValue[i].TotalTimeStorage) *
         100;
-    }
-    console.log(lvalue[0]);
+    } //lvalue는 좋았던 시간의 비율, 0은 최근꺼
 
-    let i = localStorageValue.length;
-    let NewCount = 6;
-    while (i >= 0 && NewCount >= 0) {
-      data01.push({ //여기 바꾸기
-        name: localStorageKey[NewCount],
-        value: lvalue[NewCount],
-      });
-      i--;
-      NewCount--;
+    let i = localStorageValue.length; //8
+    let NewCount = 2;
+    if (i >= NewCount) {
+      while (NewCount > 0) {
+        data01.push({
+          name: localStorageKey[NewCount - 1], //newcount -> i 로 수정
+          value: lvalue[NewCount - 1],
+        });
+        NewCount--;
+      }
+    } else {
+      while (i > 0) {
+        data01.push({
+          name: localStorageKey[i - 1], //newcount -> i 로 수정
+          value: lvalue[i - 1],
+        });
+        i--;
+      }
     }
-    console.log("data01 : " + data01[0].name); //7개 다 안차면 안그려지는듯..?
+
+    // console.log("data01 : " + data01[0].name); //7개 다 안차면 안그려지는듯..?
+    // console.log("data01 : " + data01[6].name); //7개 다 안차면 안그려지는듯..?
 
     return (
       <LineChart
@@ -112,7 +122,7 @@ function NeckMode() {
           type="monotone"
           dataKey="value"
           stroke="#8884d8"
-          name="자세 좋았던 시간 비율"
+          name="자세 좋았던 시간의 비율"
         />
       </LineChart>
     );
