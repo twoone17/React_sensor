@@ -2,6 +2,8 @@ import { useSearchParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import styles from "./Header.module.css";
 import SwitchToggle from "../etc/SwitchToggle";
+import "./Analyz.css";
+
 function Header() {
   const [connected, setConnect] = useState(true); //연결 확인
   const [Disconnected, setDisConnect] = useState(true); //연결 해제 확인
@@ -369,11 +371,13 @@ function Header() {
 
   return (
     <div className={styles.row}>
-      <button disabled={disable} onClick={onClickFlag}>
+      <button className="btn-1" disabled={disable} onClick={onClickFlag}>
         {" "}
         {flag ? "목의 자세를 측정합니다" : "허리의 자세를 측정합니다"}{" "}
       </button>
-      <button onClick={onClickBluetooth}>Click to connect bluetooth</button>
+      <button className="btn-2" onClick={onClickBluetooth}>
+        Click to connect bluetooth
+      </button>
       {connected ? (
         <h4>Device Loading...</h4>
       ) : (
