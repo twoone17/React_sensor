@@ -1,6 +1,9 @@
 import { useSearchParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import styles from "./Header.module.css";
+import SwitchToggle from "../etc/SwitchToggle";
+import "./Analyz.css";
+
 function Header() {
   const [connected, setConnect] = useState(true); //연결 확인
   const [Disconnected, setDisConnect] = useState(true); //연결 해제 확인
@@ -58,7 +61,7 @@ function Header() {
   let value;
   const [startButton, setStartButton] = useState(false);
   const [flag, setFlag] = useState(true);
-
+  const [disable, setDisable] = useState(false);
   function onClickFlag() {
     setFlag(!flag);
     console.log(flag);
@@ -113,7 +116,7 @@ function Header() {
       const characteristicFlag = await service.getCharacteristic(
         "1a4a954a-494c-11ed-b878-0242ac120002"
       );
-
+      setDisable((disable) => true);
       if (flag) {
         //true면 목
         value = 1;
@@ -161,7 +164,7 @@ function Header() {
           if (X40boolean == true || Y40boolean == true) {
             setState1("자세가 너무 안좋습니다 !! ");
             setState2("지금 당장 허리를 펴주세요 ! ");
-          }
+          } //
         } else {
           setState1("자세가 정상적입니다"); //상태
           setState2("이렇게만 유지하세요!"); //조언
@@ -241,13 +244,13 @@ function Header() {
       }
     } //허리일때 측정
     else {
-      if (Xanglevalue > 20 || Xanglevalue < -20) {
+      if (Xanglevalue < -15) {
         //TODO: 허리 X범위
         //정상범위가 아닐때
         XCount++; //1초마다 interval인 상태, 정상범위가 1초간 아닐때 +1
         Storage.XTimeStorage++;
         Xboolean = true;
-        if (Xanglevalue > 50 || Xanglevalue < -50) {
+        if (Xanglevalue < -40) {
           X40boolean = true;
         } else {
           X40boolean = false;
@@ -300,12 +303,12 @@ function Header() {
       }
     } //허리 측정
     else {
-      if (Yanglevalue > 10 || Yanglevalue < -10) {
+      if (Yanglevalue > 15 || Yanglevalue < -15) {
         //허리 y값
         YCount++;
         Yboolean = true;
         Storage.YTimeStorage++;
-        if (Yanglevalue > 40 || Yanglevalue < -40) {
+        if (Yanglevalue > 30 || Yanglevalue < -30) {
           Y40boolean = true;
         } else {
           Y40boolean = false;
@@ -368,11 +371,13 @@ function Header() {
 
   return (
     <div className={styles.row}>
-      <button onClick={onClickFlag}>
+      <button className="btn-1" disabled={disable} onClick={onClickFlag}>
         {" "}
         {flag ? "목의 자세를 측정합니다" : "허리의 자세를 측정합니다"}{" "}
       </button>
-      <button onClick={onClickBluetooth}>Click to connect bluetooth</button>
+      <button className="btn-2" onClick={onClickBluetooth}>
+        Click to connect bluetooth
+      </button>
       {connected ? (
         <h4>Device Loading...</h4>
       ) : (
