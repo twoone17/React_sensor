@@ -59,7 +59,7 @@ function Header() {
   let value;
   const [startButton, setStartButton] = useState(false);
   const [flag, setFlag] = useState(true);
-
+  const [disable, setDisable] = useState(false);
   function onClickFlag() {
     setFlag(!flag);
     console.log(flag);
@@ -114,7 +114,7 @@ function Header() {
       const characteristicFlag = await service.getCharacteristic(
         "1a4a954a-494c-11ed-b878-0242ac120002"
       );
-
+      setDisable((disable) => true);
       if (flag) {
         //true면 목
         value = 1;
@@ -369,7 +369,7 @@ function Header() {
 
   return (
     <div className={styles.row}>
-      <button onClick={onClickFlag}>
+      <button disabled={disable} onClick={onClickFlag}>
         {" "}
         {flag ? "목의 자세를 측정합니다" : "허리의 자세를 측정합니다"}{" "}
       </button>
