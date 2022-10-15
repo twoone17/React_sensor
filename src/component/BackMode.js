@@ -84,19 +84,27 @@ function BackMode() {
                 localStorageValue[i].Duplicated)) /
                 localStorageValue[i].TotalTimeStorage) * 100;
             }
-        console.log(lvalue[0]);
 
-        let i = localStorageValue.length;
-        let NewCount = 6;
-        while (i >= 0 && NewCount >= 0) {
-        data01.push({ //data01에 로컬스토리지 키,값 넣기
-            name: localStorageKey[NewCount],
-            value: lvalue[NewCount],
-        });
-        i--;
-        NewCount--;
+        let i = localStorageValue.length; //8
+        let NewCount = 7;
+        if(i>=NewCount){
+          while(NewCount>0){
+            data01.push({ 
+              name: localStorageKey[NewCount-1], //newcount -> i 로 수정
+              value: lvalue[NewCount-1],
+            });
+            NewCount--;
+          }
         }
-        console.log("data01 : " + data01[0].name);
+        else{
+          while(i>0){
+            data01.push({ 
+              name: localStorageKey[i-1], //newcount -> i 로 수정
+              value: lvalue[i-1],
+            });
+            i--;
+          }
+        };
 
         return (
         <LineChart
