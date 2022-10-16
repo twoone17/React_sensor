@@ -50,15 +50,12 @@ function Analysis() {
     },
   ]);
 
-
-
   function onClickMode() {
     if (mode == 1) {
       setMode(0);
     } else {
       setMode(1);
     }
-
   }
 
   return (
