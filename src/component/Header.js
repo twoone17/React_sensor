@@ -337,7 +337,11 @@ function Header() {
     ConvertedEndTime = timeConvert(EndTime);
     TotalTime = (EndTimeByGetTime - StartTimeByGetTime) / 1000; //경과시간 계산
     Storage.TotalTimeStorage = TotalTime;
-    localStorage.setItem(ConvertedStartTime, JSON.stringify(Storage));
+    if (value == 1) {
+      localStorage.setItem(ConvertedStartTime, JSON.stringify(Storage));
+    } else {
+      localStorage.setItem("a" + ConvertedStartTime, JSON.stringify(Storage));
+    }
     setEndTimeState(ConvertedEndTime);
     setTotalTimeState(TotalTime);
     await device.gatt.disconnect(); //연결해제
