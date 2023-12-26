@@ -42,5 +42,7 @@ After bluetooth is disconnected
 <br/>
 <br/>
 <h2>Analysis</h2>
-<img src="https://user-images.githubusercontent.com/84762786/191989888-61e2d1c8-4a27-49dd-9ca6-3e4e7639e24b.png" width="400" height="600"/>
-<img src="https://user-images.githubusercontent.com/84762786/191990541-5a38d138-611e-4caa-ab65-f9b5661ee56c.png" width="400" height="600"/>
+![image](https://github.com/twoone17/React_sensor/assets/101612514/696023e2-5d28-4b9f-ba57-663c2499709a)
+![image](https://github.com/twoone17/React_sensor/assets/101612514/e550b052-ec6a-41cf-ba4a-478fe2a5bb0b)
+![image](https://github.com/twoone17/React_sensor/assets/101612514/562a5cf9-f231-4276-98e7-48dbb949c60e)
+
