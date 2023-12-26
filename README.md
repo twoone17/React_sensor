@@ -38,10 +38,9 @@ Pairing
 
 After bluetooth is disconnected
 <br/>
-<img src="https://user-images.githubusercontent.com/84762786/191989327-d4fd2cf3-f6cb-4863-b460-c4d2053052e4.png" width="400" height="600"/>
+![image](https://github.com/twoone17/React_sensor/assets/101612514/d000de92-6169-4cb7-8ad6-ef346bfb402e)
 <br/>
 <br/>
 <h2>Analysis</h2>
 <img src="https://user-images.githubusercontent.com/84762786/191989888-61e2d1c8-4a27-49dd-9ca6-3e4e7639e24b.png" width="400" height="600"/>
 <img src="https://user-images.githubusercontent.com/84762786/191990541-5a38d138-611e-4caa-ab65-f9b5661ee56c.png" width="400" height="600"/>
-///
