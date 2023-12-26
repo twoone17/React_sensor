@@ -35,9 +35,9 @@ https://github.com/twoone17/Arduino-Sensor/blob/main/sketch_aug29a/sketch_aug29a
 <br/>
 <img src="https://user-images.githubusercontent.com/84762786/191989098-0acec4c0-32a8-46bc-991e-8fa16891c9c8.png" width="500" height="500"/>
 <br/>
-
 6) After bluetooth is disconnected
 <br/>
+
 ![image](https://github.com/twoone17/React_sensor/assets/101612514/d000de92-6169-4cb7-8ad6-ef346bfb402e)
 <br/>
 <br/>
